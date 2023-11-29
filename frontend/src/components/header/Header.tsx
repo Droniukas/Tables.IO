@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./header.module.css";
+import styles from "./header.module.scss";
 import Image from "next/image";
 import logo from "./resources/logo.svg";
 import placeholderProfilePick from "./resources/profile pick.jpg";
@@ -7,7 +7,7 @@ import placeholderProfilePick from "./resources/profile pick.jpg";
 const Header = () => {
   return (
     <div className={styles.header}>
-      <Image src={logo} alt={"Tables.IO"} className={styles.logo} />
+      <Image priority src={logo} alt={"Tables.IO"} className={styles.logo} />
       <Image
         src={placeholderProfilePick}
         alt={""}

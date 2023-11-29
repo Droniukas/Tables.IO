@@ -218,8 +218,8 @@ body {
 
 /* shadows */
 .shadow-sm {
-  box-shadow: 0px 3px 12px #000000;
+  box-shadow: 0px 3px 12px $shades-black;
 }
 .shadow-lg {
-  box-shadow: 0px 10px 20px #000000;
+  box-shadow: 0px 10px 20px $shades-black;
 }

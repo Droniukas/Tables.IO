@@ -1,0 +1,108 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: solid 1px $neutral-200;
+  border-radius: 10px;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+/* button sizes */
+.small {
+  padding: 4px 8px;
+}
+
+.small-only-icon {
+  padding: 4px;
+  border-radius: 100%;
+}
+
+.medium {
+  padding: 8px 12px;
+}
+
+.medium-only-icon {
+  padding: 8px;
+}
+
+.large,
+.large-only-icon {
+  padding: 16px;
+}
+
+/* special button primary color styles*/
+.only-icon-colored-default-primary {
+  border: 1px solid $primary-200;
+  background-color: $primary-50;
+  &:hover {
+    background-color: $primary-100;
+  }
+}
+
+.only-icon-colored-active-primary {
+  border: 1px solid $primary-500;
+  background-color: $primary-500;
+}
+
+/* special button secondary color styles*/
+.only-icon-colored-default-secondary {
+  border: 1px solid $secondary-200;
+  background-color: $secondary-50;
+  &:hover {
+    background-color: $secondary-100;
+  }
+}
+
+.only-icon-colored-active-secondary {
+  border: 1px solid $secondary-500;
+  background-color: $secondary-500;
+}
+
+/* default button both color styles */
+.default-default-secondary,
+.default-default-primary {
+  border: 1px solid $neutral-200;
+  background-color: $shades-white;
+  &:hover {
+    background-color: $neutral-50;
+  }
+}
+
+.default-active-secondary {
+  border: 1px solid $secondary-500;
+  background-color: $secondary-500;
+}
+
+.default-active-primary {
+  border: 1px solid $primary-500;
+  background-color: $primary-500;
+}
+
+/* icon sizes */
+.small-icon {
+  font-size: 16px;
+}
+
+.medium-icon,
+.large-icon {
+  font-size: 24px;
+}
+
+/* button content and icon colors */
+.primary {
+  color: $primary-500;
+}
+
+.secondary {
+  color: $secondary-500;
+}
+
+.light {
+  color: $shades-white;
+}
+
+.neutral {
+  color: $neutral-400;
+}

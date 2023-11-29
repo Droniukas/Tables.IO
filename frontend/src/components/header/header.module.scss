@@ -9,8 +9,9 @@
   right: 0;
   height: 65px;
   padding-inline: 16px;
-  background-color: var(--primary-50);
-  border-bottom: 1px solid var(--neutral-100, #e3e6e9);
+  background-color: $primary-50;
+  border-bottom: 1px solid $neutral-100;
+  box-sizing: border-box;
 }
 
 .profilePick {

@@ -1,0 +1,170 @@
+// these are for some reason the same
+@mixin text-style-h1-semi-bold() {
+  font-size: 20px;
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: normal;
+  line-height: 23px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-h1-bold() {
+  font-size: 20px;
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: normal;
+  line-height: 23px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-h1-extra-bold() {
+  font-size: 20px;
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: normal;
+  line-height: 23px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  text-transform: none;
+}
+// main text
+@mixin text-style-main-paragraph($font-weight: 400, $text-decoration: none) {
+  font-size: 16px;
+  font-family: "Inter";
+  text-transform: none;
+  font-style: normal;
+  line-height: 19px;
+  font-weight: $font-weight;
+  text-decoration: $text-decoration;
+}
+@mixin text-style-main-paragraph-regular() {
+  @include text-style-main-paragraph;
+}
+@mixin text-style-main-paragraph-bold() {
+  @include text-style-main-paragraph(700);
+}
+@mixin text-style-main-paragraph-underline() {
+  @include text-style-main-paragraph(400, underline);
+}
+
+// bigger text
+@mixin text-style-bigger-paragraph(
+  $font-weight: 400,
+  $line-height: 21.6px,
+  $text-decoration: none
+) {
+  font-size: 19px;
+  font-family: "Inter";
+  font-style: normal;
+  text-transform: none;
+  font-weight: $font-weight;
+  line-height: $line-height;
+  text-decoration: $text-decoration;
+}
+
+@mixin text-style-bigger-paragraph-regular() {
+  @include text-style-bigger-paragraph;
+}
+@mixin text-style-bigger-paragraph-bold() {
+  @include text-style-bigger-paragraph(700);
+}
+@mixin text-style-bigger-paragraph-underline() {
+  @include text-style-bigger-paragraph(400, 21px, underline);
+}
+
+// bigger text
+@mixin text-style-h-1-s-semi-bold() {
+  font-size: 16px;
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: normal;
+  line-height: 23px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-h-1-s-bold() {
+  font-size: 16px;
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: normal;
+  line-height: 23px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-h-1-s-extra-bold() {
+  font-size: 16px;
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: normal;
+  line-height: 23px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-smaller-paragraph-caption-regular() {
+  font-size: 13px;
+  font-family: "Inter";
+  font-weight: 400;
+  font-style: normal;
+  line-height: 17px;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-smaller-paragraph-caption-bold() {
+  font-size: 13px;
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: normal;
+  line-height: 17px;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-smaller-paragraph-caption-underline() {
+  font-size: 13px;
+  font-family: "Inter";
+  font-weight: 400;
+  font-style: normal;
+  line-height: 17px;
+  text-decoration: underline;
+  text-transform: none;
+}
+@mixin text-style-footer-regular() {
+  font-size: 10px;
+  font-family: "Inter";
+  font-weight: 400;
+  font-style: normal;
+  line-height: 12px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-footer-bold() {
+  font-size: 10px;
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: normal;
+  line-height: 12px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  text-transform: none;
+}
+@mixin text-style-footer-capital-and-bold() {
+  font-size: 10px;
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: normal;
+  line-height: 12px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+@mixin effect-style-shadow-sm() {
+  box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.07);
+}
+@mixin effect-style-shadow-lg() {
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+}
