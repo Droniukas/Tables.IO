@@ -1,0 +1,34 @@
+.table {
+  padding-inline: 8px;
+  border-spacing: 0 8px;
+  border-collapse: separate;
+  thead {
+    td {
+      padding-inline: 12px;
+      div {
+        display: flex;
+        align-items: center;
+        color: $neutral-500;
+      }
+    }
+  }
+  tbody {
+    tr.dataRow {
+      td {
+        padding: 20px 12px;
+        border-top: 1px solid $neutral-200;
+        border-bottom: 1px solid $neutral-200;
+        &:first-child {
+          border-left: 1px solid $neutral-200;
+          border-top-left-radius: $main-br;
+          border-bottom-left-radius: $main-br;
+        }
+        &:last-child {
+          border-right: 1px solid $neutral-200;
+          border-top-right-radius: $main-br;
+          border-bottom-right-radius: $main-br;
+        }
+      }
+    }
+  }
+}

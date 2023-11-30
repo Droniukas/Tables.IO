@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.svgLine {
+  fill: $neutral-300;
+}
+
+.centerContent {
+  margin-inline: 8px;
+  color: $neutral-600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}

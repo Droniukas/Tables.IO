@@ -4,7 +4,7 @@
   justify-content: center;
   gap: 8px;
   border: solid 1px $neutral-200;
-  border-radius: 10px;
+  border-radius: $main-br;
   transition: background-color 0.2s;
   cursor: pointer;
 }
@@ -82,7 +82,7 @@
 
 /* icon sizes */
 .small-icon {
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .medium-icon,
@@ -105,4 +105,8 @@
 
 .neutral {
   color: $neutral-400;
+}
+
+.darkerNeutral {
+  color: $neutral-600;
 }

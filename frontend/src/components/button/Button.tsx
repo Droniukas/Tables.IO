@@ -52,7 +52,13 @@ const Button = (props: ButtonProps) => {
 
   const ButtonIcon = () =>
     Icon && type !== ButtonType.NO_ICON ? (
-      <Icon className={`${iconSizeClasses} ${contentColorClasses}`} />
+      <Icon
+        className={`${iconSizeClasses} ${
+          !hasSpecialButtonType && !active
+            ? styles.darkerNeutral
+            : contentColorClasses
+        }`}
+      />
     ) : null;
 
   return (

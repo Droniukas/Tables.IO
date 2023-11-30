@@ -14,9 +14,27 @@
 
 .tableContainer {
   @include effect-style-shadow-sm;
-  border-radius: 10px;
+  border-radius: $main-br;
   border: 1px solid $neutral-100;
-  background: $primary-50;
+  background: $shades-white;
   display: flex;
   flex-direction: column;
+}
+
+.pagination {
+  padding: 8px;
+  border-top: solid 1px $neutral-100;
+}
+
+.tableButtons {
+  padding: 8px;
+  border-bottom: 1px solid $neutral-100;
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.buttonGroup {
+  display: inherit;
+  gap: inherit;
 }
