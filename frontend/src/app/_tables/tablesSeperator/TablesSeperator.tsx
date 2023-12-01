@@ -2,15 +2,10 @@ import React from "react";
 import styles from "./tablesSeperator.module.scss";
 import NotInterestedRoundedIcon from "@mui/icons-material/NotInterestedRounded";
 
-type TableSeperatorProps = {
-  columnsLenght: number;
-};
-
-const TablesSeperator = (props: TableSeperatorProps) => {
-  const { columnsLenght } = props;
+const TablesSeperator = () => {
   return (
     <tr>
-      <td colSpan={columnsLenght}>
+      <td colSpan={Number.MAX_SAFE_INTEGER}>
         <div className={styles.container}>
           <svg height='10px' width={"100%"}>
             <rect

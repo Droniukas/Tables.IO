@@ -1,30 +1,37 @@
 import React from "react";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import styles from "./table.module.scss";
-import { TableRowData } from "@/models/interfaces/TableRowData";
+import { TableData } from "@/models/interfaces/TableData";
 import TablesSeperator from "../tablesSeperator/TablesSeperator";
 import { JobApplicationStatus } from "@/models/enums/JobApplicationStatus";
+import { JobApplicationTableDataRow } from "@/models/interfaces/JobApplicationTableDataRow";
+import Button from "@/components/button/Button";
+import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
+import { Color } from "@/models/enums/Color";
+import { Size } from "@/models/enums/Size";
+import { ButtonType } from "@/models/enums/ButtonType";
+import DragIndicatorRoundedIcon from "@mui/icons-material/DragIndicatorRounded";
 
 type MainTableProps = {
-  rows: TableRowData[];
+  tableData: TableData;
 };
 
 const MainTable = (props: MainTableProps) => {
-  const { rows } = props;
+  const { tableData } = props;
+  const columnNames = tableData.columnNames;
+  const rows = tableData.rows;
 
-  // all performance heavier calculations should be memoized and handled
-  const notRejectedStatusRows: TableRowData[] = rows.filter(
-    (row) => row.columns.status !== JobApplicationStatus.REJECTED
+  // all performance heavier calculations like these two below should be memoized and handled
+  const notRejectedStatusRows: JobApplicationTableDataRow[] = rows.filter(
+    (row) => row.status !== JobApplicationStatus.REJECTED
   );
 
-  const rejectedStatusRows: TableRowData[] = rows.filter(
-    (row) => row.columns.status === JobApplicationStatus.REJECTED
+  const rejectedStatusRows: JobApplicationTableDataRow[] = rows.filter(
+    (row) => row.status === JobApplicationStatus.REJECTED
   );
-  // maybe 'rows[1].columns' part should substituted with the type itself..
-  const columnNames = Object.keys(rows[1].columns);
 
-  const mapRow = (row: TableRowData) => {
-    const { company, dateApplied, location, position, status } = row.columns;
+  const mapRow = (row: JobApplicationTableDataRow) => {
+    const { company, dateApplied, location, position, status } = row;
 
     return (
       <tr key={row.id} className={styles.dataRow}>
@@ -32,7 +39,18 @@ const MainTable = (props: MainTableProps) => {
         <td>{company}</td>
         <td>{location}</td>
         <td>{dateApplied}</td>
-        <td>{status}</td>
+        <td>
+          <span>{status}</span>
+          <div className={styles.tableRowIcons}>
+            <Button
+              icon={MoreHorizRoundedIcon}
+              color={Color.PRIMARY}
+              size={Size.SMALL}
+              type={ButtonType.ONLY_ICON}
+            />
+            <DragIndicatorRoundedIcon className={styles.draggableIcon} />
+          </div>
+        </td>
       </tr>
     );
   };
@@ -52,7 +70,7 @@ const MainTable = (props: MainTableProps) => {
       </thead>
       <tbody>
         {notRejectedStatusRows.map(mapRow)}
-        <TablesSeperator columnsLenght={columnNames.length} />
+        <TablesSeperator />
         {rejectedStatusRows.map(mapRow)}
       </tbody>
     </table>

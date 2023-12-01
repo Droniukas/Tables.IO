@@ -1,6 +1,7 @@
 import { JobApplicationStatus } from "../enums/JobApplicationStatus";
+import { TableDataRow } from "./TableDataRow";
 
-export interface JobApplicationColumns {
+export interface JobApplicationTableDataRow extends TableDataRow {
   position: string;
   company: string;
   location: string;

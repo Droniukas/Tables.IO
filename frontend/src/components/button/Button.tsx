@@ -3,7 +3,7 @@ import { Color } from "@/models/enums/Color";
 import { Size } from "@/models/enums/Size";
 import { State } from "@/models/enums/State";
 import styles from "./button.module.scss";
-import React, { useEffect } from "react";
+import React from "react";
 import { SvgIconProps } from "@mui/material";
 
 type ButtonProps = {

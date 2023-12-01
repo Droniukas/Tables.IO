@@ -27,8 +27,23 @@
           border-right: 1px solid $neutral-200;
           border-top-right-radius: $main-br;
           border-bottom-right-radius: $main-br;
+          display: flex;
+          align-items: center;
+          span {
+            padding-right: inherit;
+          }
         }
       }
     }
   }
+}
+
+.tableRowIcons {
+  display: flex;
+  align-items: center;
+}
+
+.draggableIcon {
+  color: $neutral-600;
+  cursor: pointer;
 }

@@ -8,32 +8,32 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Table from "./_tables/table/Table";
-import { TableRowData } from "@/models/interfaces/TableRowData";
+import { TableData } from "@/models/interfaces/TableData";
 import { JobApplicationStatus } from "@/models/enums/JobApplicationStatus";
 
 export default function Home() {
-  const fakeData: TableRowData[] = [
-    {
-      id: "1",
-      columns: {
+  const fakeData: TableData = {
+    id: "54sdfdsljfh",
+    columnNames: ["Position", "Company", "Location", "Date applied", "Status"],
+    rows: [
+      {
+        id: "4fdsfsdf",
         position: "Frontend engineer - React",
         company: "Maxima",
         location: "Vilnius, Lithuania",
         dateApplied: "2023-09-18",
         status: JobApplicationStatus.NO_RESPONSE,
       },
-    },
-    {
-      id: "2",
-      columns: {
+      {
+        id: "64fdsfds",
         position: ".Net Developer",
         company: "Divitech",
         location: "Remote",
         dateApplied: "2023-09-19",
         status: JobApplicationStatus.NO_RESPONSE,
       },
-    },
-  ];
+    ],
+  };
 
   return (
     <div className={styles.homeContainer}>
@@ -66,7 +66,7 @@ export default function Home() {
               icon={CloseRoundedIcon}
             />
           </div>
-          <Table rows={fakeData} />
+          <Table tableData={fakeData} />
           <div className={styles.pagination}>Pagination</div>
         </div>
       </div>
