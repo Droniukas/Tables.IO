@@ -1,0 +1,4 @@
+beautifulsoup4==4.12.2
+fastapi==0.104.1
+pydantic==2.5.2
+Requests==2.31.0
