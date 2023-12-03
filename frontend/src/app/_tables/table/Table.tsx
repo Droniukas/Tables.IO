@@ -18,7 +18,7 @@ type MainTableProps = {
 
 const MainTable = (props: MainTableProps) => {
   const { tableData } = props;
-  const columnNames = tableData.columnNames;
+  const columns = tableData.columns;
   const rows = tableData.rows;
 
   // all performance heavier calculations like these two below should be memoized and handled
@@ -59,10 +59,10 @@ const MainTable = (props: MainTableProps) => {
     <table className={styles.table}>
       <thead>
         <tr>
-          {columnNames.map((columnName) => (
-            <td key={columnName}>
+          {columns.map((column) => (
+            <td key={column.id}>
               <div>
-                {columnName} <ArrowDropDownRoundedIcon />
+                {column.name} <ArrowDropDownRoundedIcon />
               </div>
             </td>
           ))}

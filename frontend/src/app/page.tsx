@@ -11,29 +11,13 @@ import Table from "./_tables/table/Table";
 import { TableData } from "@/models/interfaces/TableData";
 import { JobApplicationStatus } from "@/models/enums/JobApplicationStatus";
 
-export default function Home() {
-  const fakeData: TableData = {
-    id: "54sdfdsljfh",
-    columnNames: ["Position", "Company", "Location", "Date applied", "Status"],
-    rows: [
-      {
-        id: "4fdsfsdf",
-        position: "Frontend engineer - React",
-        company: "Maxima",
-        location: "Vilnius, Lithuania",
-        dateApplied: "2023-09-18",
-        status: JobApplicationStatus.NO_RESPONSE,
-      },
-      {
-        id: "64fdsfds",
-        position: ".Net Developer",
-        company: "Divitech",
-        location: "Remote",
-        dateApplied: "2023-09-19",
-        status: JobApplicationStatus.NO_RESPONSE,
-      },
-    ],
-  };
+async function getTableData(userId: number): Promise<TableData> {
+  const res = await fetch(`https://localhost:7086/api/Table/${userId}`);
+  return await res.json();
+}
+
+export default async function Home() {
+  const tableData = await getTableData(1);
 
   return (
     <div className={styles.homeContainer}>
@@ -66,7 +50,7 @@ export default function Home() {
               icon={CloseRoundedIcon}
             />
           </div>
-          <Table tableData={fakeData} />
+          <Table tableData={tableData} />
           <div className={styles.pagination}>Pagination</div>
         </div>
       </div>
