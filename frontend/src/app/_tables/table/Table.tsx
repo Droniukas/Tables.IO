@@ -1,80 +1,63 @@
-import React from "react";
-import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
+"use client";
 import styles from "./table.module.scss";
 import { TableData } from "@/models/interfaces/TableData";
-import TablesSeperator from "../tablesSeperator/TablesSeperator";
 import { JobApplicationStatus } from "@/models/enums/JobApplicationStatus";
 import { JobApplicationTableDataRow } from "@/models/interfaces/JobApplicationTableDataRow";
+import Columns from "./columns/Columns";
+import Rows from "./rows/Rows";
 import Button from "@/components/button/Button";
-import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import { Color } from "@/models/enums/Color";
 import { Size } from "@/models/enums/Size";
 import { ButtonType } from "@/models/enums/ButtonType";
-import DragIndicatorRoundedIcon from "@mui/icons-material/DragIndicatorRounded";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
-type MainTableProps = {
+type TableProps = {
   tableData: TableData;
 };
 
-const MainTable = (props: MainTableProps) => {
+const Table = (props: TableProps) => {
   const { tableData } = props;
   const columns = tableData.columns;
   const rows = tableData.rows;
 
-  // all performance heavier calculations like these two below should be memoized and handled
-  const notRejectedStatusRows: JobApplicationTableDataRow[] = rows.filter(
-    (row) => row.status !== JobApplicationStatus.REJECTED
-  );
-
-  const rejectedStatusRows: JobApplicationTableDataRow[] = rows.filter(
-    (row) => row.status === JobApplicationStatus.REJECTED
-  );
-
-  const mapRow = (row: JobApplicationTableDataRow) => {
-    const { company, dateApplied, location, position, status } = row;
-
-    return (
-      <tr key={row.id} className={styles.dataRow}>
-        <td>{position}</td>
-        <td>{company}</td>
-        <td>{location}</td>
-        <td>{dateApplied}</td>
-        <td>
-          <span>{status}</span>
-          <div className={styles.tableRowIcons}>
-            <Button
-              icon={MoreHorizRoundedIcon}
-              color={Color.PRIMARY}
-              size={Size.SMALL}
-              type={ButtonType.ONLY_ICON}
-            />
-            <DragIndicatorRoundedIcon className={styles.draggableIcon} />
-          </div>
-        </td>
-      </tr>
-    );
-  };
-
   return (
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          {columns.map((column) => (
-            <td key={column.id}>
-              <div>
-                {column.name} <ArrowDropDownRoundedIcon />
-              </div>
-            </td>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {notRejectedStatusRows.map(mapRow)}
-        <TablesSeperator />
-        {rejectedStatusRows.map(mapRow)}
-      </tbody>
-    </table>
+    <div className={styles.tableContainer}>
+      <div className={styles.tableButtons}>
+        <div className={styles.buttonGroup}>
+          <Button
+            color={Color.PRIMARY}
+            size={Size.MEDIUM}
+            active
+            buttonType={ButtonType.ICON_RIGHT}
+            text='Add row'
+            icon={AddRoundedIcon}
+            onClick={() => console.log("works")}
+          />
+          <Button
+            color={Color.PRIMARY}
+            size={Size.MEDIUM}
+            buttonType={ButtonType.ICON_RIGHT}
+            text='Edit layout'
+            icon={EditRoundedIcon}
+          />
+        </div>
+        <Button
+          color={Color.PRIMARY}
+          size={Size.MEDIUM}
+          buttonType={ButtonType.ICON_RIGHT}
+          text='2 Rows selected'
+          icon={CloseRoundedIcon}
+        />
+      </div>
+      <table className={styles.table}>
+        <Columns columns={columns} />
+        <Rows rows={rows} />
+      </table>
+      <div className={styles.pagination}>Pagination</div>
+    </div>
   );
 };
 
-export default MainTable;
+export default Table;

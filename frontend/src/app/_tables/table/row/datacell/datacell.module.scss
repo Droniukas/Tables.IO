@@ -1,0 +1,46 @@
+.datacellContainer {
+  background-color: inherit;
+
+  &:hover {
+    .textEdit {
+      border-color: $primary-200;
+    }
+    .iconContainer {
+      opacity: 1;
+    }
+  }
+}
+
+.datacell {
+  background-color: inherit;
+  .datacellData {
+    position: relative;
+    padding-inline: 4px;
+    padding-block: 2px;
+    padding-right: 24px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color $main-transition;
+  }
+}
+
+.iconContainer {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+  opacity: 0;
+  transition: opacity $main-transition;
+  cursor: pointer;
+}
+
+.icon {
+  height: 24px;
+  width: 24px;
+  color: $primary-500;
+}

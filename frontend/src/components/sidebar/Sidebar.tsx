@@ -19,7 +19,7 @@ const Sidebar = () => {
         <Button
           color={Color.PRIMARY}
           size={Size.MEDIUM}
-          type={ButtonType.ONLY_ICON_COLORED}
+          buttonType={ButtonType.ONLY_ICON_COLORED}
           icon={TableChartRoundedIcon}
           active={pathname === "/"}
         />
@@ -28,7 +28,7 @@ const Sidebar = () => {
         <Button
           color={Color.PRIMARY}
           size={Size.MEDIUM}
-          type={ButtonType.ONLY_ICON_COLORED}
+          buttonType={ButtonType.ONLY_ICON_COLORED}
           icon={InsertChartRoundedIcon}
           active={pathname === "/graphs"}
         />

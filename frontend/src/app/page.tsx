@@ -1,12 +1,5 @@
-import { Icon } from "@mui/material";
 import styles from "./page.module.scss";
-import Button from "@/components/button/Button";
-import { Color } from "@/models/enums/Color";
-import { Size } from "@/models/enums/Size";
-import { ButtonType } from "@/models/enums/ButtonType";
-import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+
 import Table from "./_tables/table/Table";
 import { TableData } from "@/models/interfaces/TableData";
 import { JobApplicationStatus } from "@/models/enums/JobApplicationStatus";
@@ -17,42 +10,59 @@ async function getTableData(userId: number): Promise<TableData> {
 }
 
 export default async function Home() {
-  const tableData = await getTableData(1);
+  // const tableData = await getTableData(1);
+  // console.log(tableData);
+
+  const tableData: TableData = {
+    id: 1,
+    columns: [
+      { id: 1, name: "Position" },
+      { id: 2, name: "Company" },
+      { id: 3, name: "Location" },
+      { id: 4, name: "Date applied" },
+      { id: 5, name: "Status" },
+    ],
+    rows: [
+      {
+        id: 1,
+        position: ".Net Developer",
+        company: "Divitech",
+        location: "Remote",
+        dateApplied: "2023-09-19T00:00:00",
+        status: JobApplicationStatus.NO_RESPONSE,
+      },
+      {
+        id: 2,
+        position: "Frontend engineer - React",
+        company: "Maxima",
+        location: "Vilnius, Lithuania",
+        dateApplied: "2023-09-18T00:00:00",
+        status: JobApplicationStatus.REJECTED,
+      },
+      {
+        id: 3,
+        position: "Data analyst",
+        company: "Senukai",
+        location: "Šiauliai, Lithuania",
+        dateApplied: "2023-09-13T00:00:00",
+        status: JobApplicationStatus.GOT_INTERVIEW,
+      },
+      {
+        id: 4,
+        position: "Estimator",
+        company: "Intus windows",
+        location: "Remote",
+        dateApplied: "2023-09-20T00:00:00",
+        status: JobApplicationStatus.GOT_JOB_OFFER,
+      },
+    ],
+  };
 
   return (
     <div className={styles.homeContainer}>
       <div className={styles.tablesDiv}>
         <div className={styles.topDiv}>Top</div>
-        <div className={styles.tableContainer}>
-          <div className={styles.tableButtons}>
-            <div className={styles.buttonGroup}>
-              <Button
-                color={Color.PRIMARY}
-                size={Size.MEDIUM}
-                active
-                type={ButtonType.ICON_RIGHT}
-                text='Add row'
-                icon={AddRoundedIcon}
-              />
-              <Button
-                color={Color.PRIMARY}
-                size={Size.MEDIUM}
-                type={ButtonType.ICON_RIGHT}
-                text='Edit layout'
-                icon={EditRoundedIcon}
-              />
-            </div>
-            <Button
-              color={Color.PRIMARY}
-              size={Size.MEDIUM}
-              type={ButtonType.ICON_RIGHT}
-              text='2 Rows selected'
-              icon={CloseRoundedIcon}
-            />
-          </div>
-          <Table tableData={tableData} />
-          <div className={styles.pagination}>Pagination</div>
-        </div>
+        <Table tableData={tableData} />
       </div>
     </div>
   );

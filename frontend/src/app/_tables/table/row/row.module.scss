@@ -1,0 +1,78 @@
+@mixin dataRow(
+  $border-color: $neutral-200,
+  $status-color: inherit,
+  $status-text-color: $primary-900,
+  $status-icon-color: $primary-500
+) {
+  td {
+    // inline padding is 3px because 1px is taken by the border which is only visible on hover
+    padding: 20px 3px;
+    padding-right: 0px;
+    border-top: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    background-color: inherit;
+    &:first-child {
+      border-left: 1px solid $border-color;
+      border-top-left-radius: $main-br;
+      border-bottom-left-radius: $main-br;
+    }
+    &:last-child {
+      border-right: 1px solid $border-color;
+      border-top-right-radius: $main-br;
+      border-bottom-right-radius: $main-br;
+    }
+  }
+  .textData {
+    background-color: $status-color;
+    color: $status-text-color;
+  }
+  .dropdownIcon {
+    color: $status-icon-color;
+  }
+}
+
+.tableRowIcons {
+  display: flex;
+  align-items: center;
+}
+
+.draggableIcon {
+  color: $neutral-600;
+  cursor: pointer;
+}
+
+.lastRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background-color: inherit;
+  padding-right: 8px;
+}
+
+// rows
+.row {
+  @include dataRow;
+  background-color: white;
+}
+
+.row-rejected {
+  @include dataRow($neutral-200, inherit, $neutral-500);
+  background-color: $neutral-50;
+  color: $neutral-500;
+}
+
+.row-got-job-offer {
+  @include dataRow($success-200, $success-100, $success-700, $success-700);
+  background-color: $success-50;
+}
+
+.row-got-interview {
+  @include dataRow(
+    $secondary-200,
+    $secondary-100,
+    $secondary-700,
+    $secondary-700
+  );
+  background-color: $secondary-50;
+}

@@ -4,7 +4,7 @@
   border-collapse: separate;
   thead {
     td {
-      padding-inline: 12px;
+      padding-inline: 8px;
       div {
         display: flex;
         align-items: center;
@@ -12,38 +12,31 @@
       }
     }
   }
-  tbody {
-    tr.dataRow {
-      td {
-        padding: 20px 12px;
-        border-top: 1px solid $neutral-200;
-        border-bottom: 1px solid $neutral-200;
-        &:first-child {
-          border-left: 1px solid $neutral-200;
-          border-top-left-radius: $main-br;
-          border-bottom-left-radius: $main-br;
-        }
-        &:last-child {
-          border-right: 1px solid $neutral-200;
-          border-top-right-radius: $main-br;
-          border-bottom-right-radius: $main-br;
-          display: flex;
-          align-items: center;
-          span {
-            padding-right: inherit;
-          }
-        }
-      }
-    }
-  }
 }
 
-.tableRowIcons {
+.pagination {
+  padding: 8px;
+  border-top: solid 1px $neutral-100;
+}
+
+.tableButtons {
+  padding: 8px;
+  border-bottom: 1px solid $neutral-100;
   display: flex;
-  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
 }
 
-.draggableIcon {
-  color: $neutral-600;
-  cursor: pointer;
+.buttonGroup {
+  display: inherit;
+  gap: inherit;
+}
+
+.tableContainer {
+  @include effect-style-shadow-sm;
+  border-radius: $main-br;
+  border: 1px solid $neutral-100;
+  background: $shades-white;
+  display: flex;
+  flex-direction: column;
 }
