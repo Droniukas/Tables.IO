@@ -1,5 +1,5 @@
 import { JobApplicationTableDataRow } from "@/models/interfaces/JobApplicationTableDataRow";
-import React from "react";
+import React, { memo } from "react";
 import Button from "@/components/button/Button";
 import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
 import { Color } from "@/models/enums/Color";
@@ -40,16 +40,16 @@ const Row = (props: RowProps) => {
         <div>ss</div>
       ) : (
         <tr className={`${styles.dataRow} ${styles[jobStatusClass]}`}>
-          <Datacell text={position} />
-          <Datacell text={company} />
-          <Datacell text={location} />
-          <Datacell text={dateApplied} />
+          <Datacell initialText={position} />
+          <Datacell initialText={company} />
+          <Datacell initialText={location} />
+          <Datacell initialText={dateApplied} />
           <Datacell
             isDropdown
             className={styles.lastRow}
             textClassName={styles.textData}
             iconClassName={styles.dropdownIcon}
-            text={status}
+            initialText={status}
           >
             <div className={styles.tableRowIcons}>
               <Button
@@ -67,4 +67,4 @@ const Row = (props: RowProps) => {
   );
 };
 
-export default Row;
+export default memo(Row);
