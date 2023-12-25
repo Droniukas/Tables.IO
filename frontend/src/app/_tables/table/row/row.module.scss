@@ -56,23 +56,18 @@
   background-color: white;
 }
 
-.row-rejected {
+.row-neutral {
   @include dataRow($neutral-200, inherit, $neutral-500);
   background-color: $neutral-50;
   color: $neutral-500;
 }
 
-.row-got-job-offer {
+.row-success {
   @include dataRow($success-200, $success-100, $success-700, $success-700);
   background-color: $success-50;
 }
 
-.row-got-interview {
-  @include dataRow(
-    $secondary-200,
-    $secondary-100,
-    $secondary-700,
-    $secondary-700
-  );
+.row-secondary {
+  @include dataRow($secondary-200, $secondary-100, $secondary-700, $secondary-700);
   background-color: $secondary-50;
 }

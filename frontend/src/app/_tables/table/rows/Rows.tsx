@@ -1,36 +1,27 @@
-import React from "react";
-import TablesSeperator from "../../tablesSeperator/TablesSeperator";
-import Row from "../row/Row";
-import { JobApplicationTableDataRow } from "@/models/interfaces/JobApplicationTableDataRow";
-import { JobApplicationStatus } from "@/models/enums/JobApplicationStatus";
+import { TableDataRow } from '@/models/interfaces/TableDataRow';
+import TablesSeperator from '../../tablesSeperator/TablesSeperator';
+import Row from '../row/Row';
 
 type RowsProps = {
-  rows: JobApplicationTableDataRow[];
+  rows: TableDataRow[];
 };
 
-const Rows = (props: RowsProps) => {
+function Rows(props: RowsProps) {
   const { rows } = props;
 
-  // all performance heavier calculations like these two below should be memoized and handled
-  const notRejectedStatusRows: JobApplicationTableDataRow[] = rows.filter(
-    (row) => row.status !== JobApplicationStatus.REJECTED
-  );
+  // should all performance heavier calculations like these two below be memoized/handled for performance in nextjs?
+  const topRows: TableDataRow[] = rows.filter((row) => !row.isBottomRow);
+  const bottomRows: TableDataRow[] = rows.filter((row) => row.isBottomRow);
 
-  const rejectedStatusRows: JobApplicationTableDataRow[] = rows.filter(
-    (row) => row.status === JobApplicationStatus.REJECTED
-  );
-
-  const mapRow = (row: JobApplicationTableDataRow) => {
-    return <Row key={row.id} row={row} />;
-  };
+  const mapRow = (row: TableDataRow) => <Row key={row.id} row={row} />;
 
   return (
     <tbody>
-      {notRejectedStatusRows.map(mapRow)}
+      {topRows.map(mapRow)}
       <TablesSeperator />
-      {rejectedStatusRows.map(mapRow)}
+      {bottomRows.map(mapRow)}
     </tbody>
   );
-};
+}
 
 export default Rows;

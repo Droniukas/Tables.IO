@@ -1,40 +1,40 @@
-"use client";
-import React, { useEffect } from "react";
-import styles from "./sidebar.module.scss";
-import Button from "../button/Button";
-import { Color } from "@/models/enums/Color";
-import { Size } from "@/models/enums/Size";
-import { ButtonType } from "@/models/enums/ButtonType";
-import TableChartRoundedIcon from "@mui/icons-material/TableChartRounded";
-import InsertChartRoundedIcon from "@mui/icons-material/InsertChartRounded";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+'use client';
 
-const Sidebar = () => {
+import { ButtonColor } from '@/models/enums/ButtonColor';
+import { Size } from '@/models/enums/Size';
+import { ButtonType } from '@/models/enums/ButtonType';
+import TableChartRoundedIcon from '@mui/icons-material/TableChartRounded';
+import InsertChartRoundedIcon from '@mui/icons-material/InsertChartRounded';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import Button from '../button/Button';
+import styles from './sidebar.module.scss';
+
+function Sidebar() {
   const pathname = usePathname();
 
   return (
     <div className={styles.sidebar}>
-      <Link href={"/"}>
+      <Link href="/">
         <Button
-          color={Color.PRIMARY}
+          color={ButtonColor.PRIMARY}
           size={Size.MEDIUM}
           buttonType={ButtonType.ONLY_ICON_COLORED}
           icon={TableChartRoundedIcon}
-          active={pathname === "/"}
+          active={pathname === '/'}
         />
       </Link>
-      <Link href={"/graphs"}>
+      <Link href="/graphs">
         <Button
-          color={Color.PRIMARY}
+          color={ButtonColor.PRIMARY}
           size={Size.MEDIUM}
           buttonType={ButtonType.ONLY_ICON_COLORED}
           icon={InsertChartRoundedIcon}
-          active={pathname === "/graphs"}
+          active={pathname === '/graphs'}
         />
       </Link>
     </div>
   );
-};
+}
 
 export default Sidebar;

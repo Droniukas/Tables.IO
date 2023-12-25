@@ -1,70 +1,71 @@
-import { JobApplicationTableDataRow } from "@/models/interfaces/JobApplicationTableDataRow";
-import React, { memo } from "react";
-import Button from "@/components/button/Button";
-import MoreHorizRoundedIcon from "@mui/icons-material/MoreHorizRounded";
-import { Color } from "@/models/enums/Color";
-import { Size } from "@/models/enums/Size";
-import { ButtonType } from "@/models/enums/ButtonType";
-import DragIndicatorRoundedIcon from "@mui/icons-material/DragIndicatorRounded";
-import styles from "./row.module.scss";
-import { JobApplicationStatus } from "@/models/enums/JobApplicationStatus";
-import Datacell from "./datacell/Datacell";
+import { TableDataRow } from '@/models/interfaces/TableDataRow';
+import { memo } from 'react';
+import Button from '@/components/button/Button';
+import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
+import { ButtonColor } from '@/models/enums/ButtonColor';
+import { Size } from '@/models/enums/Size';
+import { ButtonType } from '@/models/enums/ButtonType';
+import DragIndicatorRoundedIcon from '@mui/icons-material/DragIndicatorRounded';
+import { Color } from '@/models/enums/Color';
+import styles from './row.module.scss';
+import Datacell from './datacell/Datacell';
 
 type RowProps = {
-  row: JobApplicationTableDataRow;
+  row: TableDataRow;
   specialDatalessRow?: boolean;
 };
 
-const Row = (props: RowProps) => {
+function Row(props: RowProps) {
   const { row, specialDatalessRow } = props;
-  const { company, dateApplied, location, position, status } = row;
 
-  let jobStatusClass = "row";
+  let rowColorClass = 'row';
   if (!specialDatalessRow) {
-    switch (status) {
-      case JobApplicationStatus.GOT_JOB_OFFER:
-        jobStatusClass += "-got-job-offer";
+    switch (row.color) {
+      case Color.SUCCESS:
+        rowColorClass += '-success';
         break;
-      case JobApplicationStatus.GOT_INTERVIEW:
-        jobStatusClass += "-got-interview";
+      case Color.SECONDARY:
+        rowColorClass += '-secondary';
         break;
-      case JobApplicationStatus.REJECTED:
-        jobStatusClass += "-rejected";
+      case Color.NEUTRAL:
+        rowColorClass += '-neutral';
         break;
     }
   }
 
-  return (
-    <>
-      {specialDatalessRow ? (
-        <div>ss</div>
-      ) : (
-        <tr className={`${styles.dataRow} ${styles[jobStatusClass]}`}>
-          <Datacell initialText={position} />
-          <Datacell initialText={company} />
-          <Datacell initialText={location} />
-          <Datacell initialText={dateApplied} />
-          <Datacell
-            isDropdown
-            className={styles.lastRow}
-            textClassName={styles.textData}
-            iconClassName={styles.dropdownIcon}
-            initialText={status}
-          >
-            <div className={styles.tableRowIcons}>
-              <Button
-                icon={MoreHorizRoundedIcon}
-                color={Color.PRIMARY}
-                size={Size.SMALL}
-                buttonType={ButtonType.ONLY_ICON}
-              />
-              <DragIndicatorRoundedIcon className={styles.draggableIcon} />
-            </div>
-          </Datacell>
-        </tr>
-      )}
-    </>
+  return specialDatalessRow ? (
+    <div>ss</div>
+  ) : (
+    <tr className={`${styles.dataRow} ${styles[rowColorClass]}`}>
+      {row.datacells.map((datacell) => {
+        const isDropdown = datacell.dropdown !== undefined;
+        if (datacell.isLastColumn) {
+          return (
+            <Datacell
+              key={datacell.id}
+              isDropdown={isDropdown}
+              className={styles.lastRow}
+              textClassName={styles.textData}
+              iconClassName={styles.dropdownIcon}
+              initialText={datacell.value}
+              isLastColumn
+            >
+              <div className={styles.tableRowIcons}>
+                <Button
+                  icon={MoreHorizRoundedIcon}
+                  color={ButtonColor.PRIMARY}
+                  size={Size.SMALL}
+                  buttonType={ButtonType.ONLY_ICON}
+                />
+                <DragIndicatorRoundedIcon className={styles.draggableIcon} />
+              </div>
+            </Datacell>
+          );
+        }
+        return <Datacell key={datacell.id} initialText={datacell.value} isDropdown={isDropdown} />;
+      })}
+    </tr>
   );
-};
+}
 
 export default memo(Row);

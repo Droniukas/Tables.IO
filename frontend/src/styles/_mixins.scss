@@ -1,7 +1,7 @@
 // these are for some reason the same
 @mixin text-style-h1-semi-bold() {
   font-size: 20px;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-weight: 700;
   font-style: normal;
   line-height: 23px;
@@ -11,7 +11,7 @@
 }
 @mixin text-style-h1-bold() {
   font-size: 20px;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-weight: 700;
   font-style: normal;
   line-height: 23px;
@@ -21,7 +21,7 @@
 }
 @mixin text-style-h1-extra-bold() {
   font-size: 20px;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-weight: 700;
   font-style: normal;
   line-height: 23px;
@@ -32,7 +32,7 @@
 // main text
 @mixin text-style-main-paragraph($font-weight: 400, $text-decoration: none) {
   font-size: 16px;
-  font-family: "Inter";
+  font-family: 'Inter';
   text-transform: none;
   font-style: normal;
   line-height: 19px;
@@ -50,13 +50,9 @@
 }
 
 // bigger text
-@mixin text-style-bigger-paragraph(
-  $font-weight: 400,
-  $line-height: 21.6px,
-  $text-decoration: none
-) {
+@mixin text-style-bigger-paragraph($font-weight: 400, $line-height: 21.6px, $text-decoration: none) {
   font-size: 19px;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-style: normal;
   text-transform: none;
   font-weight: $font-weight;
@@ -77,7 +73,7 @@
 // bigger text
 @mixin text-style-h-1-s-semi-bold() {
   font-size: 16px;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-weight: 700;
   font-style: normal;
   line-height: 23px;
@@ -87,7 +83,7 @@
 }
 @mixin text-style-h-1-s-bold() {
   font-size: 16px;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-weight: 700;
   font-style: normal;
   line-height: 23px;
@@ -97,7 +93,7 @@
 }
 @mixin text-style-h-1-s-extra-bold() {
   font-size: 16px;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-weight: 700;
   font-style: normal;
   line-height: 23px;
@@ -107,7 +103,7 @@
 }
 @mixin text-style-smaller-paragraph-caption-regular() {
   font-size: 13px;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-weight: 400;
   font-style: normal;
   line-height: 17px;
@@ -116,7 +112,7 @@
 }
 @mixin text-style-smaller-paragraph-caption-bold() {
   font-size: 13px;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-weight: 700;
   font-style: normal;
   line-height: 17px;
@@ -125,7 +121,7 @@
 }
 @mixin text-style-smaller-paragraph-caption-underline() {
   font-size: 13px;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-weight: 400;
   font-style: normal;
   line-height: 17px;
@@ -134,7 +130,7 @@
 }
 @mixin text-style-footer-regular() {
   font-size: 10px;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-weight: 400;
   font-style: normal;
   line-height: 12px;
@@ -144,7 +140,7 @@
 }
 @mixin text-style-footer-bold() {
   font-size: 10px;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-weight: 700;
   font-style: normal;
   line-height: 12px;
@@ -154,7 +150,7 @@
 }
 @mixin text-style-footer-capital-and-bold() {
   font-size: 10px;
-  font-family: "Inter";
+  font-family: 'Inter';
   font-weight: 700;
   font-style: normal;
   line-height: 12px;

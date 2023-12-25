@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-const Graphs = () => {
+function Graphs() {
   return <div>Not yet implemented</div>;
-};
+}
 
 export default Graphs;

@@ -1,5 +1,9 @@
-// this is abstract and shouldn be used
+import { Color } from '../enums/Color';
+import { TableDataDatacell } from './TableDataDatacell';
+
 export interface TableDataRow {
   id: number;
-  // others like date modified
+  color: Color;
+  datacells: TableDataDatacell[];
+  isBottomRow?: boolean;
 }

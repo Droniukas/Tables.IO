@@ -1,4 +1,4 @@
 export enum State {
-  DEFAULT = "default",
-  ACTIVE = "active",
+  DEFAULT = 'default',
+  ACTIVE = 'active',
 }

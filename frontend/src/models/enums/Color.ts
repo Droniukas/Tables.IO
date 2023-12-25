@@ -1,4 +1,6 @@
 export enum Color {
-  PRIMARY = "primary",
-  SECONDARY = "secondary",
+  NONE = 'none',
+  SUCCESS = 'success',
+  SECONDARY = 'secondary',
+  NEUTRAL = 'neutral',
 }

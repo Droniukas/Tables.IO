@@ -1,12 +1,12 @@
-import React from "react";
-import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
-import { Column } from "@/models/interfaces/Column";
+import React from 'react';
+import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
+import { Column } from '@/models/interfaces/Column';
 
 type ColumnsProps = {
   columns: Column[];
 };
 
-const Columns = (props: ColumnsProps) => {
+function Columns(props: ColumnsProps) {
   const { columns } = props;
   return (
     <thead>
@@ -21,6 +21,6 @@ const Columns = (props: ColumnsProps) => {
       </tr>
     </thead>
   );
-};
+}
 
 export default Columns;
