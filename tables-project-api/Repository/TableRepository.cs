@@ -1,7 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using tables_project_api.Data;
+﻿using tables_project_api.Data;
 using tables_project_api.Interfaces;
-using tables_project_api.Models;
 
 namespace tables_project_api.Repository
 {
@@ -13,9 +11,9 @@ namespace tables_project_api.Repository
         {
             this._context = context;
         }
-        public Table? getTableByUserId(int userId)
-        {
-            return _context.Tables.Include(table => table.Columns).Include(table => table.Rows).Where(table => table.UserId == userId).FirstOrDefault();
-        }
+        //public Table? getTableByUserId(int userId)
+        //{
+        //    return _context.Tables.Include(table => table.Columns).Include(table => table.Rows).Where(table => table.UserId == userId).FirstOrDefault();
+        //}
     }
 }

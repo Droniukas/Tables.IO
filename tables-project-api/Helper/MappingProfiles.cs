@@ -11,7 +11,7 @@ namespace tables_project_api.Helper
 
             CreateMap<Table, TableReturnDto>();
             CreateMap<Column, ColumnReturnDto>();
-            CreateMap<JobApplicationRow, JobApplicationRowReturnDto>();
+            CreateMap<Row, TableRowReturnDto>();
         }
     }
 }

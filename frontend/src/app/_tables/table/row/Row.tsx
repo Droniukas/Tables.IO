@@ -1,4 +1,4 @@
-import { TableDataRow } from '@/models/interfaces/TableDataRow';
+import { TableRowDto } from '@/models/interfaces/TableRowDto';
 import { memo } from 'react';
 import Button from '@/components/button/Button';
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
@@ -11,7 +11,7 @@ import styles from './row.module.scss';
 import Datacell from './datacell/Datacell';
 
 type RowProps = {
-  row: TableDataRow;
+  row: TableRowDto;
   specialDatalessRow?: boolean;
 };
 

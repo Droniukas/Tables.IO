@@ -1,5 +1,5 @@
 import { JobApplicationStatus } from '@/models/enums/JobApplicationStatus';
-import { TableData } from '@/models/interfaces/Table';
+import { TableDto } from '@/models/interfaces/TableDto';
 import { Color } from '@/models/enums/Color';
 import Table from './_tables/table/Table';
 import styles from './page.module.scss';
@@ -58,7 +58,7 @@ export default async function Home() {
   //   ],
   // };
 
-  const tableData: TableData = {
+  const tableDto: TableDto = {
     id: 1,
     columns: [
       { id: 1, name: 'Position' },
@@ -220,7 +220,7 @@ export default async function Home() {
     <div className={styles.homeContainer}>
       <div className={styles.tablesDiv}>
         <div className={styles.topDiv}>Top</div>
-        <Table tableData={tableData} />
+        <Table tableDto={tableDto} />
       </div>
     </div>
   );

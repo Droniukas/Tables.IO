@@ -4,6 +4,6 @@
     {
         public int Id { get; set; }
         public ICollection<ColumnReturnDto> Columns { get; set; }
-        public ICollection<JobApplicationRowReturnDto> Rows { get; set; }
+        public ICollection<TableRowReturnDto> Rows { get; set; }
     }
 }

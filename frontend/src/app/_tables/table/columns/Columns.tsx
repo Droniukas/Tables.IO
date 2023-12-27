@@ -1,9 +1,9 @@
 import React from 'react';
 import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
-import { Column } from '@/models/interfaces/Column';
+import { ColumnDto } from '@/models/interfaces/ColumnDto';
 
 type ColumnsProps = {
-  columns: Column[];
+  columns: ColumnDto[];
 };
 
 function Columns(props: ColumnsProps) {

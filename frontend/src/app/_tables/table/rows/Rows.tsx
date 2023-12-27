@@ -1,19 +1,19 @@
-import { TableDataRow } from '@/models/interfaces/TableDataRow';
+import { TableRowDto } from '@/models/interfaces/TableRowDto';
 import TablesSeperator from '../../tablesSeperator/TablesSeperator';
 import Row from '../row/Row';
 
 type RowsProps = {
-  rows: TableDataRow[];
+  rows: TableRowDto[];
 };
 
 function Rows(props: RowsProps) {
   const { rows } = props;
 
   // should all performance heavier calculations like these two below be memoized/handled for performance in nextjs?
-  const topRows: TableDataRow[] = rows.filter((row) => !row.isBottomRow);
-  const bottomRows: TableDataRow[] = rows.filter((row) => row.isBottomRow);
+  const topRows: TableRowDto[] = rows.filter((row) => !row.isBottomRow);
+  const bottomRows: TableRowDto[] = rows.filter((row) => row.isBottomRow);
 
-  const mapRow = (row: TableDataRow) => <Row key={row.id} row={row} />;
+  const mapRow = (row: TableRowDto) => <Row key={row.id} row={row} />;
 
   return (
     <tbody>

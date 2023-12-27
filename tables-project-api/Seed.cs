@@ -14,62 +14,153 @@ namespace tables_project_api
         {
             if (!dataContext.Tables.Any())
             {
+                Column positionColumn = new Column() { Name = "Position" };
+                Column companyColumn = new Column() { Name = "Company" };
+                Column locationColumn = new Column() { Name = "Location" };
+                Column dateAppliedColumn = new Column() { Name = "Date applied", Datepicker = new Datepicker() };
+                Column statusColumn = new Column()
+                {
+                    Name = "Status",
+                    Dropdown = new Dropdown()
+                    {
+                        Options = new List<DropdownOption>()
+                        {
+                            new DropdownOption()
+                            {
+                                Value = "No response"
+                            },
+                            new DropdownOption()
+                            {
+                                Value = "Got interview"
+                            },
+                            new DropdownOption()
+                            {
+                                Value = "Rejected"
+                            },
+                            new DropdownOption()
+                            {
+                                Value = "Got job offer"
+                            },
+                        }
+                    }
+                };
+
                 List<Table> tables = new List<Table>()
                 {
                 new Table()
                     {
+                        UserId = 1,
                         Columns = new List<Column>
                         {
-                            new Column() { Name= "Position" },
-                            new Column() { Name = "Company" },
-                            new Column() { Name = "Location" },
-                            new Column() { Name = "Date applied" },
-                            new Column() { Name= "Status" }
+                            positionColumn,
+                            companyColumn,
+                            locationColumn,
+                            dateAppliedColumn,
+                            statusColumn,
                         },
-                        Rows = new List<JobApplicationRow>
+                        Rows = new List<Row>
                         {
-                            new JobApplicationRow()
-                            {
-                                Position = ".Net Developer",
-                                Company = "Divitech",
-                                Location = "Remote",
-                                DateApplied = new DateTime(2023, 09, 19),
-                                Status = "No response",
+                            new Row() {
+                                TextDatacells = new List<TextDatacell>
+                                {
+                                    new TextDatacell()
+                                    {
+                                        Value = ".Net Developer",
+                                        Column = positionColumn,
+                                    },
+                                    new TextDatacell()
+                                    {
+                                        Value = "Divitech",
+                                        Column = companyColumn
+                                    },
+                                    new TextDatacell()
+                                    {
+                                        Value = "Remote",
+                                        Column = locationColumn
+                                    },
+                                    new TextDatacell()
+                                    {
+                                        Value = "No response",
+                                        Column = statusColumn
+                                    },
+                                },
+                                DateDatacells = new List<DateDatacell>
+                                {
+                                    new DateDatacell()
+                                    {
+                                        Value = new DateTime(2021, 1, 1),
+                                        //Column = dateAppliedColumn
+                                    }
+                                }
                             },
-                            new JobApplicationRow()
+                            new Row()
                             {
-                                Position = "Frontend engineer - React",
-                                Company = "Maxima",
-                                Location = "Vilnius, Lithuania",
-                                DateApplied = new DateTime(2023, 09, 18),
-                                Status = "No response",
+                                TextDatacells = new List<TextDatacell>
+                                {
+                                    new TextDatacell()
+                                    {
+                                        Value = "Frontend Developer",
+                                        Column = positionColumn
+                                    },
+                                    new TextDatacell()
+                                    {
+                                        Value = "Google",
+                                        Column = companyColumn
+                                    },
+                                    new TextDatacell()
+                                    {
+                                        Value = "Remote",
+                                        Column = locationColumn
+                                    },
+                                    new TextDatacell()
+                                    {
+                                        Value = "No response",
+                                        Column = statusColumn
+                                    },
+                                },
+                                DateDatacells = new List<DateDatacell>
+                                {
+                                    new DateDatacell()
+                                    {
+                                        Value = new DateTime(2021, 1, 1),
+                                        //Column = dateAppliedColumn
+                                    }
+                                }
                             },
                         },
-                        UserId = 1
-                    },
-                new Table()
-                    {
-                        Columns = new List<Column>
+                        ColumnColorsValues = new ColumnColorsValues()
                         {
-                            new Column() { Name= "Position" },
-                            new Column() { Name = "Company" },
-                            new Column() { Name = "Location" },
-                            new Column() { Name = "Date applied" },
-                            new Column() { Name= "Status" }
-                        },
-                        Rows = new List<JobApplicationRow>
-                        {
-                            new JobApplicationRow()
+                            Column = statusColumn,
+                            ColorsValues = new List<ColorValue>
                             {
-                                Position = "Software support",
-                                Company = "Hostinger",
-                                Location = "Vilnius, Lithuania",
-                                DateApplied = new DateTime(2023, 07, 19),
-                                Status = "No response",
-                            },
+                                new ColorValue()
+                                {
+                                    Value = "No response",
+                                    Color = "none"
+                                },
+                                new ColorValue()
+                                {
+                                    Value = "Got interview",
+                                    Color = "secondary"
+                                },
+                                new ColorValue()
+                                {
+                                    Value = "Rejected",
+                                    Color = "neutral"
+                                },
+                                new ColorValue()
+                                {
+                                    Value = "Got job offer",
+                                    Color = "success"
+                                },
+                            }
                         },
-                        UserId = 1
-                    },
+                        ColumnIsBottomRowValue = new ColumnIsBottomRowValue()
+                        {
+                            Column = statusColumn,
+                            Value = "Rejected"
+                        },
+                    }
                 };
                 dataContext.Tables.AddRange(tables);
                 dataContext.SaveChanges();

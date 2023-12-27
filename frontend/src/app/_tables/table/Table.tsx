@@ -7,19 +7,19 @@ import { ButtonType } from '@/models/enums/ButtonType';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
-import { TableData } from '@/models/interfaces/Table';
+import { TableDto } from '@/models/interfaces/TableDto';
 import Rows from './rows/Rows';
 import Columns from './columns/Columns';
 import styles from './table.module.scss';
 
 type TableProps = {
-  tableData: TableData;
+  tableDto: TableDto;
 };
 
 function Table(props: TableProps) {
-  const { tableData } = props;
-  const { columns } = tableData;
-  const { rows } = tableData;
+  const { tableDto } = props;
+  const { columns } = tableDto;
+  const { rows } = tableDto;
 
   return (
     <div className={styles.tableContainer}>
