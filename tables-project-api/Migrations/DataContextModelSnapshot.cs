@@ -83,7 +83,8 @@ namespace tables_project_api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ColumnId");
+                    b.HasIndex("ColumnId")
+                        .IsUnique();
 
                     b.ToTable("ColumnColorsValues");
                 });
@@ -105,12 +106,13 @@ namespace tables_project_api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ColumnId");
+                    b.HasIndex("ColumnId")
+                        .IsUnique();
 
                     b.ToTable("ColumnIsBottomRowValues");
                 });
 
-            modelBuilder.Entity("tables_project_api.Models.DateDatacell", b =>
+            modelBuilder.Entity("tables_project_api.Models.Datacell", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -118,14 +120,15 @@ namespace tables_project_api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("ColumnId")
+                    b.Property<int>("ColumnId")
                         .HasColumnType("int");
 
                     b.Property<int>("RowId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Value")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -133,7 +136,7 @@ namespace tables_project_api.Migrations
 
                     b.HasIndex("RowId");
 
-                    b.ToTable("DateDatacells");
+                    b.ToTable("Datacells");
                 });
 
             modelBuilder.Entity("tables_project_api.Models.Datepicker", b =>
@@ -222,49 +225,12 @@ namespace tables_project_api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("ColumnColorsValuesId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ColumnIsBottomRowValueId")
-                        .HasColumnType("int");
-
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ColumnColorsValuesId");
-
-                    b.HasIndex("ColumnIsBottomRowValueId");
-
                     b.ToTable("Tables");
-                });
-
-            modelBuilder.Entity("tables_project_api.Models.TextDatacell", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("ColumnId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RowId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ColumnId");
-
-                    b.HasIndex("RowId");
-
-                    b.ToTable("TextDatacells");
                 });
 
             modelBuilder.Entity("tables_project_api.Models.ColorValue", b =>
@@ -288,8 +254,8 @@ namespace tables_project_api.Migrations
             modelBuilder.Entity("tables_project_api.Models.ColumnColorsValues", b =>
                 {
                     b.HasOne("tables_project_api.Models.Column", "Column")
-                        .WithMany()
-                        .HasForeignKey("ColumnId")
+                        .WithOne("ColumnColorsValues")
+                        .HasForeignKey("tables_project_api.Models.ColumnColorsValues", "ColumnId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -299,22 +265,24 @@ namespace tables_project_api.Migrations
             modelBuilder.Entity("tables_project_api.Models.ColumnIsBottomRowValue", b =>
                 {
                     b.HasOne("tables_project_api.Models.Column", "Column")
-                        .WithMany()
-                        .HasForeignKey("ColumnId")
+                        .WithOne("ColumnIsBottomRowValue")
+                        .HasForeignKey("tables_project_api.Models.ColumnIsBottomRowValue", "ColumnId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Column");
                 });
 
-            modelBuilder.Entity("tables_project_api.Models.DateDatacell", b =>
+            modelBuilder.Entity("tables_project_api.Models.Datacell", b =>
                 {
                     b.HasOne("tables_project_api.Models.Column", "Column")
                         .WithMany()
-                        .HasForeignKey("ColumnId");
+                        .HasForeignKey("ColumnId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("tables_project_api.Models.Row", "Row")
-                        .WithMany("DateDatacells")
+                        .WithMany("Datacells")
                         .HasForeignKey("RowId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -368,40 +336,12 @@ namespace tables_project_api.Migrations
                     b.Navigation("Table");
                 });
 
-            modelBuilder.Entity("tables_project_api.Models.Table", b =>
+            modelBuilder.Entity("tables_project_api.Models.Column", b =>
                 {
-                    b.HasOne("tables_project_api.Models.ColumnColorsValues", "ColumnColorsValues")
-                        .WithMany()
-                        .HasForeignKey("ColumnColorsValuesId");
-
-                    b.HasOne("tables_project_api.Models.ColumnIsBottomRowValue", "ColumnIsBottomRowValue")
-                        .WithMany()
-                        .HasForeignKey("ColumnIsBottomRowValueId");
-
                     b.Navigation("ColumnColorsValues");
 
                     b.Navigation("ColumnIsBottomRowValue");
-                });
 
-            modelBuilder.Entity("tables_project_api.Models.TextDatacell", b =>
-                {
-                    b.HasOne("tables_project_api.Models.Column", "Column")
-                        .WithMany()
-                        .HasForeignKey("ColumnId");
-
-                    b.HasOne("tables_project_api.Models.Row", "Row")
-                        .WithMany("TextDatacells")
-                        .HasForeignKey("RowId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Column");
-
-                    b.Navigation("Row");
-                });
-
-            modelBuilder.Entity("tables_project_api.Models.Column", b =>
-                {
                     b.Navigation("Datepicker");
 
                     b.Navigation("Dropdown");
@@ -419,9 +359,7 @@ namespace tables_project_api.Migrations
 
             modelBuilder.Entity("tables_project_api.Models.Row", b =>
                 {
-                    b.Navigation("DateDatacells");
-
-                    b.Navigation("TextDatacells");
+                    b.Navigation("Datacells");
                 });
 
             modelBuilder.Entity("tables_project_api.Models.Table", b =>

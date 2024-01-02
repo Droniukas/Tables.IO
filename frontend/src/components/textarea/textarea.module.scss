@@ -1,0 +1,8 @@
+.textarea,
+.textarea:focus-visible,
+.textarea:focus {
+  border-radius: $main-br;
+  border: 1px solid $primary-900; // still not 1px
+  padding: 2px 4px;
+  resize: none;
+}

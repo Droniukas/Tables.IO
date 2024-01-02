@@ -1,79 +1,24 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace tables_project_api.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "ColorValue",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ColumnColorsValuesId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ColorValue", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ColumnColorsValues",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ColumnId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ColumnColorsValues", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ColumnIsBottomRowValues",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ColumnId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ColumnIsBottomRowValues", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Tables",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
-                    ColumnColorsValuesId = table.Column<int>(type: "int", nullable: true),
-                    ColumnIsBottomRowValueId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tables", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Tables_ColumnColorsValues_ColumnColorsValuesId",
-                        column: x => x.ColumnColorsValuesId,
-                        principalTable: "ColumnColorsValues",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Tables_ColumnIsBottomRowValues_ColumnIsBottomRowValueId",
-                        column: x => x.ColumnIsBottomRowValueId,
-                        principalTable: "ColumnIsBottomRowValues",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -111,6 +56,45 @@ namespace tables_project_api.Migrations
                         name: "FK_Rows_Tables_TableId",
                         column: x => x.TableId,
                         principalTable: "Tables",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ColumnColorsValues",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ColumnId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ColumnColorsValues", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ColumnColorsValues_Columns_ColumnId",
+                        column: x => x.ColumnId,
+                        principalTable: "Columns",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ColumnIsBottomRowValues",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ColumnId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ColumnIsBottomRowValues", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ColumnIsBottomRowValues_Columns_ColumnId",
+                        column: x => x.ColumnId,
+                        principalTable: "Columns",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -154,25 +138,25 @@ namespace tables_project_api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DateDatacells",
+                name: "Datacells",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Value = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RowId = table.Column<int>(type: "int", nullable: false),
-                    ColumnId = table.Column<int>(type: "int", nullable: true)
+                    ColumnId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DateDatacells", x => x.Id);
+                    table.PrimaryKey("PK_Datacells", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_DateDatacells_Columns_ColumnId",
+                        name: "FK_Datacells_Columns_ColumnId",
                         column: x => x.ColumnId,
                         principalTable: "Columns",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_DateDatacells_Rows_RowId",
+                        name: "FK_Datacells_Rows_RowId",
                         column: x => x.RowId,
                         principalTable: "Rows",
                         principalColumn: "Id",
@@ -180,29 +164,23 @@ namespace tables_project_api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TextDatacells",
+                name: "ColorValue",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Color = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RowId = table.Column<int>(type: "int", nullable: false),
-                    ColumnId = table.Column<int>(type: "int", nullable: true)
+                    ColumnColorsValuesId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TextDatacells", x => x.Id);
+                    table.PrimaryKey("PK_ColorValue", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TextDatacells_Columns_ColumnId",
-                        column: x => x.ColumnId,
-                        principalTable: "Columns",
+                        name: "FK_ColorValue_ColumnColorsValues_ColumnColorsValuesId",
+                        column: x => x.ColumnColorsValuesId,
+                        principalTable: "ColumnColorsValues",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_TextDatacells_Rows_RowId",
-                        column: x => x.RowId,
-                        principalTable: "Rows",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -233,12 +211,14 @@ namespace tables_project_api.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ColumnColorsValues_ColumnId",
                 table: "ColumnColorsValues",
-                column: "ColumnId");
+                column: "ColumnId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_ColumnIsBottomRowValues_ColumnId",
                 table: "ColumnIsBottomRowValues",
-                column: "ColumnId");
+                column: "ColumnId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Columns_TableId",
@@ -246,13 +226,13 @@ namespace tables_project_api.Migrations
                 column: "TableId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DateDatacells_ColumnId",
-                table: "DateDatacells",
+                name: "IX_Datacells_ColumnId",
+                table: "Datacells",
                 column: "ColumnId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DateDatacells_RowId",
-                table: "DateDatacells",
+                name: "IX_Datacells_RowId",
+                table: "Datacells",
                 column: "RowId");
 
             migrationBuilder.CreateIndex(
@@ -276,66 +256,18 @@ namespace tables_project_api.Migrations
                 name: "IX_Rows_TableId",
                 table: "Rows",
                 column: "TableId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tables_ColumnColorsValuesId",
-                table: "Tables",
-                column: "ColumnColorsValuesId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tables_ColumnIsBottomRowValueId",
-                table: "Tables",
-                column: "ColumnIsBottomRowValueId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TextDatacells_ColumnId",
-                table: "TextDatacells",
-                column: "ColumnId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TextDatacells_RowId",
-                table: "TextDatacells",
-                column: "RowId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ColorValue_ColumnColorsValues_ColumnColorsValuesId",
-                table: "ColorValue",
-                column: "ColumnColorsValuesId",
-                principalTable: "ColumnColorsValues",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ColumnColorsValues_Columns_ColumnId",
-                table: "ColumnColorsValues",
-                column: "ColumnId",
-                principalTable: "Columns",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_ColumnIsBottomRowValues_Columns_ColumnId",
-                table: "ColumnIsBottomRowValues",
-                column: "ColumnId",
-                principalTable: "Columns",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Tables_ColumnColorsValues_ColumnColorsValuesId",
-                table: "Tables");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_ColumnIsBottomRowValues_Columns_ColumnId",
-                table: "ColumnIsBottomRowValues");
-
             migrationBuilder.DropTable(
                 name: "ColorValue");
 
             migrationBuilder.DropTable(
-                name: "DateDatacells");
+                name: "ColumnIsBottomRowValues");
+
+            migrationBuilder.DropTable(
+                name: "Datacells");
 
             migrationBuilder.DropTable(
                 name: "Datepickers");
@@ -344,25 +276,19 @@ namespace tables_project_api.Migrations
                 name: "DropdownOptions");
 
             migrationBuilder.DropTable(
-                name: "TextDatacells");
-
-            migrationBuilder.DropTable(
-                name: "Dropdowns");
+                name: "ColumnColorsValues");
 
             migrationBuilder.DropTable(
                 name: "Rows");
 
             migrationBuilder.DropTable(
-                name: "ColumnColorsValues");
+                name: "Dropdowns");
 
             migrationBuilder.DropTable(
                 name: "Columns");
 
             migrationBuilder.DropTable(
                 name: "Tables");
-
-            migrationBuilder.DropTable(
-                name: "ColumnIsBottomRowValues");
         }
     }
 }

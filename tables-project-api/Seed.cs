@@ -42,96 +42,10 @@ namespace tables_project_api
                                 Value = "Got job offer"
                             },
                         }
-                    }
-                };
-
-                List<Table> tables = new List<Table>()
-                {
-                new Table()
+                    },
+                    ColumnColorsValues = new ColumnColorsValues()
                     {
-                        UserId = 1,
-                        Columns = new List<Column>
-                        {
-                            positionColumn,
-                            companyColumn,
-                            locationColumn,
-                            dateAppliedColumn,
-                            statusColumn,
-                        },
-                        Rows = new List<Row>
-                        {
-                            new Row() {
-                                TextDatacells = new List<TextDatacell>
-                                {
-                                    new TextDatacell()
-                                    {
-                                        Value = ".Net Developer",
-                                        Column = positionColumn,
-                                    },
-                                    new TextDatacell()
-                                    {
-                                        Value = "Divitech",
-                                        Column = companyColumn
-                                    },
-                                    new TextDatacell()
-                                    {
-                                        Value = "Remote",
-                                        Column = locationColumn
-                                    },
-                                    new TextDatacell()
-                                    {
-                                        Value = "No response",
-                                        Column = statusColumn
-                                    },
-                                },
-                                DateDatacells = new List<DateDatacell>
-                                {
-                                    new DateDatacell()
-                                    {
-                                        Value = new DateTime(2021, 1, 1),
-                                        //Column = dateAppliedColumn
-                                    }
-                                }
-                            },
-                            new Row()
-                            {
-                                TextDatacells = new List<TextDatacell>
-                                {
-                                    new TextDatacell()
-                                    {
-                                        Value = "Frontend Developer",
-                                        Column = positionColumn
-                                    },
-                                    new TextDatacell()
-                                    {
-                                        Value = "Google",
-                                        Column = companyColumn
-                                    },
-                                    new TextDatacell()
-                                    {
-                                        Value = "Remote",
-                                        Column = locationColumn
-                                    },
-                                    new TextDatacell()
-                                    {
-                                        Value = "No response",
-                                        Column = statusColumn
-                                    },
-                                },
-                                DateDatacells = new List<DateDatacell>
-                                {
-                                    new DateDatacell()
-                                    {
-                                        Value = new DateTime(2021, 1, 1),
-                                        //Column = dateAppliedColumn
-                                    }
-                                }
-                            },
-                        },
-                        ColumnColorsValues = new ColumnColorsValues()
-                        {
-                            Column = statusColumn,
-                            ColorsValues = new List<ColorValue>
+                        ColorsValues = new List<ColorValue>
                             {
                                 new ColorValue()
                                 {
@@ -154,11 +68,101 @@ namespace tables_project_api
                                     Color = "success"
                                 },
                             }
-                        },
-                        ColumnIsBottomRowValue = new ColumnIsBottomRowValue()
+                    },
+                    ColumnIsBottomRowValue = new ColumnIsBottomRowValue()
+                    {
+                        Value = "Rejected"
+                    },
+                };
+
+                //List<Column> columns = new List<Column>()
+                //{
+                //    positionColumn,
+                //    companyColumn,
+                //    locationColumn,
+                //    dateAppliedColumn,
+                //    statusColumn,
+                //};
+
+                //dataContext.Columns.AddRange(columns);
+                //dataContext.SaveChanges();
+
+                List<Table> tables = new List<Table>()
+                {
+                new Table()
+                    {
+                        UserId = 1,
+                        Columns = new List<Column>
                         {
-                            Column = statusColumn,
-                            Value = "Rejected"
+                            positionColumn,
+                            companyColumn,
+                            locationColumn,
+                            dateAppliedColumn,
+                            statusColumn,
+                        },
+                        Rows = new List<Row>
+                        {
+                            new Row() {
+                                Datacells = new List<Datacell>
+                                {
+                                    new Datacell()
+                                    {
+                                        Value = ".Net Developer",
+                                        Column = positionColumn,
+                                    },
+                                    new Datacell()
+                                    {
+                                        Value = "Divitech",
+                                        Column = companyColumn
+                                    },
+                                    new Datacell()
+                                    {
+                                        Value = "Remote",
+                                        Column = locationColumn
+                                    },
+                                    new Datacell()
+                                    {
+                                        Value = new DateTime(2021, 1, 1).ToString(),
+                                        Column = dateAppliedColumn
+                                    },
+                                    new Datacell()
+                                    {
+                                        Value = "Rejected",
+                                        Column = statusColumn
+                                    },
+                                },
+                            },
+                            new Row()
+                            {
+                                Datacells = new List<Datacell>
+                                {
+                                    new Datacell()
+                                    {
+                                        Value = "Frontend Developer",
+                                        Column = positionColumn
+                                    },
+                                    new Datacell()
+                                    {
+                                        Value = "Google",
+                                        Column = companyColumn
+                                    },
+                                    new Datacell()
+                                    {
+                                        Value = "Remote",
+                                        Column = locationColumn
+                                    },
+                                    new Datacell()
+                                    {
+                                        Value = new DateTime(2022, 4, 1).ToString(),
+                                        Column = dateAppliedColumn
+                                    },
+                                    new Datacell()
+                                    {
+                                        Value = "Got interview",
+                                        Column = statusColumn
+                                    },
+                                },
+                            },
                         },
                     }
                 };

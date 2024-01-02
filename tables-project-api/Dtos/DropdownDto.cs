@@ -2,6 +2,6 @@
 {
     public class DropdownDto
     {
-        public ICollection<DropdownOptionDto> Options { get; set; }
+        public ICollection<DropdownOptionReturnDto> Options { get; set; }
     }
 }

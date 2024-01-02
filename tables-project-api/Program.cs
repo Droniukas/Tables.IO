@@ -42,6 +42,7 @@ namespace tables_project_api
             builder.Services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                //options.EnableSensitiveDataLogging(true); // remove this from prod
             });
 
             var app = builder.Build();

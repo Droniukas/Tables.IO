@@ -1,8 +1,7 @@
 ﻿namespace tables_project_api.Dtos
 {
-    public class DropdownOptionDto
+    public class InputDatacellValueDto
     {
-        public int Id { get; set; }
         public string Value { get; set; }
     }
 }

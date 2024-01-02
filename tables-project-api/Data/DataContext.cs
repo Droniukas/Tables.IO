@@ -15,8 +15,7 @@ namespace tables_project_api.Data
         public DbSet<Table> Tables { get; set; }
         public DbSet<Row> Rows { get; set; }
         public DbSet<Column> Columns { get; set; }
-        public DbSet<TextDatacell> TextDatacells { get; set; }
-        public DbSet<DateDatacell> DateDatacells { get; set; }
+        public DbSet<Datacell> Datacells { get; set; }
         public DbSet<DropdownOption> DropdownOptions { get; set; }
         public DbSet<Dropdown> Dropdowns { get; set; }
         public DbSet<Datepicker> Datepickers { get; set; }
@@ -37,11 +36,22 @@ namespace tables_project_api.Data
                 .HasForeignKey<Dropdown>(dropdown => dropdown.ColumnId)
                 .IsRequired();
 
-            //modelBuilder.Entity<Table>()
-            //    .HasOne(table => table.ColumnColorsValues)
-            //    .WithOne(columnColorsValues => columnColorsValues.Table)
-            //    .HasForeignKey<ColumnColorsValues>(columnColorsValues => columnColorsValues.TableId)
-            //    .IsRequired();
+            modelBuilder.Entity<Column>()
+                .HasOne(column => column.ColumnColorsValues)
+                .WithOne(columnColorsValues => columnColorsValues.Column)
+                .HasForeignKey<ColumnColorsValues>(columnColorsValues => columnColorsValues.ColumnId)
+                .IsRequired();
+
+            modelBuilder.Entity<Column>()
+                .HasOne(column => column.ColumnIsBottomRowValue)
+                .WithOne(columnIsBottomRowValue => columnIsBottomRowValue.Column)
+                .HasForeignKey<ColumnIsBottomRowValue>(columnIsBottomRowValue => columnIsBottomRowValue.ColumnId)
+                .IsRequired();
+
+            modelBuilder.Entity<Datacell>()
+                .HasOne(datacell => datacell.Column)
+                .WithMany()
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

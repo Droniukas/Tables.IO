@@ -18,6 +18,10 @@ type RowProps = {
 function Row(props: RowProps) {
   const { row, specialDatalessRow } = props;
 
+  const updateDatacellValueById = (datacellId: number, value: string) => {
+    // console.log('updateDatacellValueById', datacellId, value);
+  };
+
   let rowColorClass = 'row';
   if (!specialDatalessRow) {
     switch (row.color) {
@@ -38,17 +42,15 @@ function Row(props: RowProps) {
   ) : (
     <tr className={`${styles.dataRow} ${styles[rowColorClass]}`}>
       {row.datacells.map((datacell) => {
-        const isDropdown = datacell.dropdown !== undefined;
         if (datacell.isLastColumn) {
           return (
             <Datacell
               key={datacell.id}
-              isDropdown={isDropdown}
               className={styles.lastRow}
               textClassName={styles.textData}
               iconClassName={styles.dropdownIcon}
-              initialText={datacell.value}
-              isLastColumn
+              datacell={datacell}
+              onSave={updateDatacellValueById}
             >
               <div className={styles.tableRowIcons}>
                 <Button
@@ -62,7 +64,7 @@ function Row(props: RowProps) {
             </Datacell>
           );
         }
-        return <Datacell key={datacell.id} initialText={datacell.value} isDropdown={isDropdown} />;
+        return <Datacell key={datacell.id} onSave={updateDatacellValueById} datacell={datacell} />;
       })}
     </tr>
   );
