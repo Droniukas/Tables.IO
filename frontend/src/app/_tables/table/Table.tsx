@@ -8,6 +8,9 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { TableDto } from '@/models/interfaces/TableDto';
+import { TableRowDto } from '@/models/interfaces/TableRowDto';
+import { InputDatacellValueDto } from '@/models/interfaces/InputDatacellValueDto';
+import { useCallback, useMemo, useState } from 'react';
 import Rows from './rows/Rows';
 import Columns from './columns/Columns';
 import styles from './table.module.scss';
@@ -18,8 +21,48 @@ type TableProps = {
 
 function Table(props: TableProps) {
   const { tableDto } = props;
-  const { columns } = tableDto;
-  const { rows } = tableDto;
+  const [tableData, setTableData] = useState<TableDto>(tableDto);
+  const { columns } = tableData;
+  const { rows } = tableData;
+
+  // should all performance heavier calculations like these two below be memoized/handled for performance in nextjs?
+  const checkIsBottomRow = useCallback(
+    (row: TableRowDto) =>
+      row.datacells.find((datacell) => datacell.columnId === tableData.bottomRowColumnId)?.value ===
+      tableData.bottomRowValue,
+    []
+  );
+  const topRows: TableRowDto[] = useMemo(() => rows.filter((row) => !checkIsBottomRow(row)), [tableDto]);
+  const bottomRows: TableRowDto[] = useMemo(() => rows.filter((row) => checkIsBottomRow(row)), [tableDto]);
+
+  const updateDatacellValueById = useCallback(async (datacellId: number, value: string) => {
+    const body: InputDatacellValueDto = { value };
+
+    await fetch(`https://localhost:7086/api/Table/updateDatacellValueById/${datacellId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+
+    rows
+      .find((row) => row.datacells.find((datacell) => datacell.id === datacellId))!
+      .datacells.find((datacell) => datacell.id === datacellId)!.value = value;
+    
+
+    setTableData((prev) => {
+      const outputTable = prev.rows.map((row) => {
+        row.datacells.map((datacell) => {
+          if (datacell.id === datacellId) {
+            datacell.value = value;
+          }
+          return datacell;
+        });
+        return outputTable;
+      })
+    });
+  }, []);
 
   return (
     <div className={styles.tableContainer}>
@@ -52,7 +95,7 @@ function Table(props: TableProps) {
       </div>
       <table className={styles.table}>
         <Columns columns={columns} />
-        <Rows rows={rows} />
+        <Rows topRows={topRows} bottomRows={bottomRows} updateDatacellValueById={updateDatacellValueById} />
       </table>
       <div className={styles.pagination}>Pagination</div>
     </div>

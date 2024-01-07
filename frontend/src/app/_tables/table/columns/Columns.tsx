@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
 import { ColumnDto } from '@/models/interfaces/ColumnDto';
 
@@ -23,4 +23,4 @@ function Columns(props: ColumnsProps) {
   );
 }
 
-export default Columns;
+export default memo(Columns);

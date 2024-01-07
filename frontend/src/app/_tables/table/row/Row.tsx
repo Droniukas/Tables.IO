@@ -1,5 +1,4 @@
 import { TableRowDto } from '@/models/interfaces/TableRowDto';
-import { memo } from 'react';
 import Button from '@/components/button/Button';
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
 import { ButtonColor } from '@/models/enums/ButtonColor';
@@ -7,20 +6,18 @@ import { Size } from '@/models/enums/Size';
 import { ButtonType } from '@/models/enums/ButtonType';
 import DragIndicatorRoundedIcon from '@mui/icons-material/DragIndicatorRounded';
 import { Color } from '@/models/enums/Color';
+import { memo } from 'react';
 import styles from './row.module.scss';
 import Datacell from './datacell/Datacell';
 
 type RowProps = {
   row: TableRowDto;
   specialDatalessRow?: boolean;
+  updateDatacellValueById: (datacellId: number, value: string) => void;
 };
 
 function Row(props: RowProps) {
-  const { row, specialDatalessRow } = props;
-
-  const updateDatacellValueById = (datacellId: number, value: string) => {
-    // console.log('updateDatacellValueById', datacellId, value);
-  };
+  const { row, specialDatalessRow, updateDatacellValueById } = props;
 
   let rowColorClass = 'row';
   if (!specialDatalessRow) {

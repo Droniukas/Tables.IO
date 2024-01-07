@@ -39,6 +39,9 @@
   opacity: 0;
   transition: opacity $main-transition;
   cursor: pointer;
+  &:focus {
+    opacity: 1;
+  }
 }
 
 .icon {
