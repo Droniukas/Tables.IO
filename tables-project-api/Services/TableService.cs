@@ -28,14 +28,22 @@ namespace tables_project_api.Services
 
             Column? bottomRowColumn = columns.Find(column => column.ColumnIsBottomRowValue != null);
 
-            TableReturnDto tableReturnDto = new TableReturnDto()
+            var rows = MapRowsToTableRowDtos(table.Rows, columns);
+
+            return new TableReturnDto()
             {
                 Columns = _mapper.Map<ICollection<ColumnReturnDto>>(table.Columns),
-                Rows = MapRowsToTableRowDtos(table.Rows, columns),
-                BottomRowColumnId = bottomRowColumn != null ? bottomRowColumn.Id : null,
-                BottomRowValue = bottomRowColumn != null ? bottomRowColumn.ColumnIsBottomRowValue!.Value : null,
+                TopRows = rows.ToList().Where((row) => !CheckIsBottomRow(row, bottomRowColumn)),
+                BottomRows = rows.ToList().Where((row) => CheckIsBottomRow(row, bottomRowColumn))
+                //BottomRowColumnId = bottomRowColumn != null ? bottomRowColumn.Id : null,
+                //BottomRowValue = bottomRowColumn != null ? bottomRowColumn.ColumnIsBottomRowValue!.Value : null,
             };
-            return tableReturnDto;
+        }
+
+        private bool CheckIsBottomRow(TableRowReturnDto row, Column? bottomRowColumn)
+        {
+            return row.Datacells.ToList().Find((datacell) => datacell.ColumnId == bottomRowColumn?.Id)?.Value ==
+            bottomRowColumn?.ColumnIsBottomRowValue?.Value;
         }
 
         private ICollection<TableRowReturnDto> MapRowsToTableRowDtos(ICollection<Row> rows, List<Column> columns)
@@ -94,10 +102,8 @@ namespace tables_project_api.Services
                     Value = datacell.Value,
                     ColumnId = datacell.Column.Id,
                     IsLastColumn = datacell.Column.Id == columns.Last().Id,
-                    Dropdown = coorespondingColumn.Dropdown != null ?
-                    new DropdownDto() { Options = _mapper.Map<ICollection<DropdownOptionReturnDto>>(coorespondingColumn.Dropdown.Options) } : null,
-                    Datepicker = coorespondingColumn.Datepicker != null ?
-                    new DatepickerDto() { } : null,
+                    Dropdown = coorespondingColumn.Dropdown != null ? new DropdownDto() { Options = _mapper.Map<ICollection<DropdownOptionReturnDto>>(coorespondingColumn.Dropdown.Options) } : null,
+                    Datepicker = coorespondingColumn.Datepicker != null ? new DatepickerDto() { } : null,
                 });
             }
 

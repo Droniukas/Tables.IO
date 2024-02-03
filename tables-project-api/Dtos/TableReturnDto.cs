@@ -3,9 +3,8 @@
     public class TableReturnDto
     {
         public int Id { get; set; }
-        public ICollection<ColumnReturnDto> Columns { get; set; }
-        public ICollection<TableRowReturnDto> Rows { get; set; }
-        public int? BottomRowColumnId { get; set; }
-        public string? BottomRowValue { get; set; }
+        public IEnumerable<ColumnReturnDto> Columns { get; set; }
+        public IEnumerable<TableRowReturnDto> TopRows { get; set; }
+        public IEnumerable<TableRowReturnDto> BottomRows { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { TextareaAutosize } from '@mui/material';
-import { KeyboardEvent, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useOutsideClick } from '@/hooks/useOutsideClick';
 import styles from './textarea.module.scss';
 
@@ -18,13 +18,6 @@ export default function Textarea(props: TextareaProps) {
 
   const ref = useRef<HTMLTextAreaElement>(null);
 
-  const onTextareaKeypress = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      onEnter(value);
-    }
-  };
-
   useOutsideClick(ref, () => onOutsideClick(value), [onOutsideClick]);
 
   return (
@@ -34,7 +27,12 @@ export default function Textarea(props: TextareaProps) {
       onFocus={(event) => event.target.setSelectionRange(event.target.value.length, event.target.value.length)}
       onChange={(event) => setValue(event.target.value)}
       className={styles.textarea}
-      onKeyDown={onTextareaKeypress}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          onEnter(value);
+        }
+      }}
       ref={ref}
     />
   );

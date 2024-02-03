@@ -1,6 +1,7 @@
 import { TableDto } from '@/models/interfaces/TableDto';
 import Table from './_tables/table/Table';
-import styles from './page.module.scss';
+import styles from './_tables/table/table.module.scss';
+import TableButtons from './_tables/table/TableButtons';
 
 async function getTableData(userId: number): Promise<TableDto> {
   // figure out what to do with cache
@@ -218,7 +219,9 @@ export default async function Home() {
     <div className={styles.homeContainer}>
       <div className={styles.tablesDiv}>
         <div className={styles.topDiv}>Top</div>
-        <Table tableDto={tableDto} />
+        <div className={styles.tableContainer}>
+          <Table tableDto={tableDto} />
+        </div>
       </div>
     </div>
   );

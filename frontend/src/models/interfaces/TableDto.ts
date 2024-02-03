@@ -4,7 +4,6 @@ import { TableRowDto } from './TableRowDto';
 export interface TableDto {
   id: number;
   columns: ColumnDto[];
-  rows: TableRowDto[];
-  bottomRowColumnId?: number;
-  bottomRowValue?: string;
+  topRows: TableRowDto[];
+  bottomRows: TableRowDto[];
 }
