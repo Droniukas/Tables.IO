@@ -12,8 +12,8 @@ using tables_project_api.Data;
 namespace tables_project_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240102130507_initial")]
-    partial class initial
+    [Migration("20240210085329_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

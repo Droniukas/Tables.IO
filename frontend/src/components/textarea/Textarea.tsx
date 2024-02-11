@@ -9,10 +9,12 @@ type TextareaProps = {
   onEnter: (newValue: string) => void;
   onOutsideClick: (newValue: string) => void;
   defaultValue: string;
+  placeholder?: string;
+  disabled?: boolean;
 };
 
 export default function Textarea(props: TextareaProps) {
-  const { onEnter, onOutsideClick, defaultValue } = props;
+  const { onEnter, onOutsideClick, defaultValue, placeholder, disabled } = props;
 
   const [value, setValue] = useState(defaultValue);
 
@@ -34,6 +36,8 @@ export default function Textarea(props: TextareaProps) {
         }
       }}
       ref={ref}
+      placeholder={placeholder}
+      disabled={disabled}
     />
   );
 }

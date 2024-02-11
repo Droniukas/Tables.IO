@@ -10,7 +10,13 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import styles from './table.module.scss';
 
-function TableButtons() {
+type TableButtonsProps = {
+  onAddRowClick: () => void;
+};
+
+function TableButtons(props: TableButtonsProps) {
+  const { onAddRowClick } = props;
+
   return (
     <div className={styles.tableButtons}>
       <div className={styles.buttonGroup}>
@@ -21,7 +27,7 @@ function TableButtons() {
           buttonType={ButtonType.ICON_RIGHT}
           text="Add row"
           icon={AddRoundedIcon}
-          onClick={() => console.log('works')}
+          onClick={onAddRowClick}
         />
         <Button
           color={ButtonColor.PRIMARY}

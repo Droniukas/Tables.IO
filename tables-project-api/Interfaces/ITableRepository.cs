@@ -4,7 +4,9 @@ namespace tables_project_api.Interfaces
 {
     public interface ITableRepository
     {
-        Table? getTableByUserId(int userId);
+        Table? GetTableByUserId(int userId);
+        Row? GetRowByDatacellId(int datacellId);
+        ICollection<Column> GetColumnsByRowId(int rowId); 
         void UpdateDatacellValueById(int id, string newValue);
     }
 }

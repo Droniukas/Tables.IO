@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, KeyboardEvent, MouseEvent } from 'react';
+import React, { useState, KeyboardEvent, MouseEvent, useEffect } from 'react';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import { TableDatacellDto } from '@/models/interfaces/TableDatacellDto';
@@ -14,18 +14,23 @@ type DatacellProps = {
   textClassName?: string;
   iconClassName?: string;
   datacell: TableDatacellDto;
-  onSave: (datacellId: number, value: string) => void;
+  onSave: (datacellId: number, value: string) => void | Function;
+  isEditingByDefault?: boolean;
 };
 
 function Datacell(props: DatacellProps) {
-  const { className, children, textClassName, iconClassName, onSave, datacell } = props;
+  const { className, children, textClassName, iconClassName, onSave, datacell, isEditingByDefault } = props;
+  const [datacellValue, setDatacellValue] = useState<string>(datacell.value);
+  useEffect(() => {
+    setDatacellValue(datacell.value);
+  }, [datacell.value]);
 
   const isDropdown = datacell.dropdown !== null;
 
-  const [isEditing, setIsEditing] = useState(false);
-
   const [dropdownAnchorEl, setDropdownAnchorEl] = useState<(EventTarget & Element) | null>(null);
   const openDropdown = Boolean(dropdownAnchorEl);
+
+  const [isEditing, setIsEditing] = useState(isDropdown ? false : isEditingByDefault);
 
   const handleOpenDropdown = (event: KeyboardEvent | MouseEvent) => {
     setDropdownAnchorEl(event.currentTarget);
@@ -38,6 +43,7 @@ function Datacell(props: DatacellProps) {
   const handleSave = (newValue: string) => {
     setIsEditing(false);
     onSave(datacell.id, newValue);
+    setDatacellValue(newValue);
   };
 
   return (
@@ -47,13 +53,13 @@ function Datacell(props: DatacellProps) {
           <Textarea
             onEnter={(newValue) => handleSave(newValue)}
             onOutsideClick={(newValue) => handleSave(newValue)}
-            defaultValue={datacell.value}
+            defaultValue={datacellValue}
           />
         ) : (
           <div
             className={`${styles.datacellData} ${textClassName} ${isDropdown ? styles.dropdownEdit : styles.textEdit}`}
           >
-            {datacell.value}
+            {datacellValue}
             {isDropdown && (
               <Menu open={openDropdown} onClose={handleCloseDropdown} anchorEl={dropdownAnchorEl}>
                 {datacell.dropdown?.options.map((option) => (

@@ -14,11 +14,10 @@ namespace tables_project_api.Repository
             this._context = context;
         }
 
-        public Table? getTableByUserId(int userId)
+        public Table? GetTableByUserId(int userId)
         {
             return _context.Tables
-                .Include(table => table.Columns)
-                .ThenInclude(column => column.Datepicker)
+                .Include(table => table.Columns).ThenInclude(column => column.Datepicker)
                 .Include(table => table.Columns).ThenInclude(column => column.Dropdown!.Options)
                 .Include(table => table.Columns).ThenInclude(column => column.ColumnColorsValues!.ColorsValues)
                 .Include(table => table.Columns).ThenInclude(column => column.ColumnIsBottomRowValue)
@@ -32,6 +31,21 @@ namespace tables_project_api.Repository
             if (datacell == null) { throw new Exception("Invalid datacell update Id"); }
             datacell.Value = newValue;
             _context.SaveChanges();
+        }
+
+        public Row? GetRowByDatacellId(int datacellId)
+        {
+            return _context.Rows.Include(row => row.Datacells).FirstOrDefault(row => row.Datacells.Any(datacell => datacell.Id == datacellId));
+        }
+
+        public ICollection<Column> GetColumnsByRowId(int rowId)
+        {
+            return _context.Tables.Where(table => table.Rows.Any(row => row.Id == rowId)).SelectMany(table => table.Columns)
+                .Include(column => column.Datepicker)
+                .Include(column => column.Dropdown!.Options)
+                .Include(column => column.ColumnColorsValues!.ColorsValues)
+                .Include(column => column.ColumnIsBottomRowValue)
+                .ToList();
         }
     }
 }

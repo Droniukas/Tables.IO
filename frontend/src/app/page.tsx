@@ -1,7 +1,6 @@
 import { TableDto } from '@/models/interfaces/TableDto';
 import Table from './_tables/table/Table';
 import styles from './_tables/table/table.module.scss';
-import TableButtons from './_tables/table/TableButtons';
 
 async function getTableData(userId: number): Promise<TableDto> {
   // figure out what to do with cache

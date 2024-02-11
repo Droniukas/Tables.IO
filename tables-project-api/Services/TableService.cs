@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Drawing;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -21,51 +22,43 @@ namespace tables_project_api.Services
 
         public TableReturnDto GetTableByUserId(int userId)
         {
-            Table? table = _tableRepository.getTableByUserId(userId);
+            Table? table = _tableRepository.GetTableByUserId(userId);
             if (table == null) throw new Exception(message: "invalid userId");
 
             List<Column> columns = table.Columns.ToList();
 
-            Column? bottomRowColumn = columns.Find(column => column.ColumnIsBottomRowValue != null);
-
-            var rows = MapRowsToTableRowDtos(table.Rows, columns);
-
             return new TableReturnDto()
             {
                 Columns = _mapper.Map<ICollection<ColumnReturnDto>>(table.Columns),
-                TopRows = rows.ToList().Where((row) => !CheckIsBottomRow(row, bottomRowColumn)),
-                BottomRows = rows.ToList().Where((row) => CheckIsBottomRow(row, bottomRowColumn))
+                Rows = MapRowsToTableRowDtos(table.Rows, columns),
                 //BottomRowColumnId = bottomRowColumn != null ? bottomRowColumn.Id : null,
                 //BottomRowValue = bottomRowColumn != null ? bottomRowColumn.ColumnIsBottomRowValue!.Value : null,
             };
         }
 
-        private bool CheckIsBottomRow(TableRowReturnDto row, Column? bottomRowColumn)
+        private bool CheckIsBottomRow(Row row, Column? bottomRowColumn)
         {
-            return row.Datacells.ToList().Find((datacell) => datacell.ColumnId == bottomRowColumn?.Id)?.Value ==
-            bottomRowColumn?.ColumnIsBottomRowValue?.Value;
+            return row.Datacells.FirstOrDefault((datacell) => datacell.Column.Id == bottomRowColumn?.Id)?.Value == bottomRowColumn?.ColumnIsBottomRowValue?.Value;
         }
 
         private ICollection<TableRowReturnDto> MapRowsToTableRowDtos(ICollection<Row> rows, List<Column> columns)
         {
+            Column? columnResponsibleForRowIsBottom = GetColumnResponsibleForRowIsBottom(columns);
+            Column? columnResponsibleForRowColor = GetColumnResponsibleForRowColor(columns);
+            Column lastColumn = columns.Last();
 
             var outputRows = new List<TableRowReturnDto>();
             foreach (var row in rows)
             {
-                var outputRow = new TableRowReturnDto()
-                {
-                    Id = row.Id,
-                    Color = GetRowColor(row, columns),
-                    Datacells = GetRowDatacells(row, columns)
-                };
-                outputRows.Add(outputRow);
+                outputRows.Add(MapRowToTableRowDto(row, columns, lastColumn, columnResponsibleForRowIsBottom, columnResponsibleForRowColor));
             }
             return outputRows;
         }
 
-        private string GetRowColor(Row row, List<Column> columns)
+
+
+        private string GetRowColor(Row row, Column? responsibleColumn)
         {
-            Column? responsibleColumn = columns.Find(columns => columns.ColumnColorsValues != null);
             if (responsibleColumn == null)
             {
                 return "none";
@@ -88,7 +81,7 @@ namespace tables_project_api.Services
             return "none";
         }
 
-        private ICollection<TableDatacellReturnDto> GetRowDatacells(Row row, List<Column> columns)
+        private ICollection<TableDatacellReturnDto> GetRowDatacells(Row row, Column lastColumn, List<Column> columns)
         {
             var outputDatacells = new List<TableDatacellReturnDto>();
             foreach (var datacell in row.Datacells)
@@ -101,7 +94,7 @@ namespace tables_project_api.Services
                     Id = datacell.Id,
                     Value = datacell.Value,
                     ColumnId = datacell.Column.Id,
-                    IsLastColumn = datacell.Column.Id == columns.Last().Id,
+                    IsLastColumn = datacell.Column.Id == lastColumn.Id,
                     Dropdown = coorespondingColumn.Dropdown != null ? new DropdownDto() { Options = _mapper.Map<ICollection<DropdownOptionReturnDto>>(coorespondingColumn.Dropdown.Options) } : null,
                     Datepicker = coorespondingColumn.Datepicker != null ? new DatepickerDto() { } : null,
                 });
@@ -110,9 +103,28 @@ namespace tables_project_api.Services
             return outputDatacells;
         }
 
-        public void UpdateDatacellValueById(int id, string newValue)
+        public TableRowReturnDto UpdateDatacellValueById(int id, string newValue)
         {
             _tableRepository.UpdateDatacellValueById(id, newValue);
+            Row? parentRow = _tableRepository.GetRowByDatacellId(id);
+
+            if (parentRow == null) {
+                throw new Exception("No parent row for datacell found");
+            }
+
+            List<Column> columns = _tableRepository.GetColumnsByRowId(parentRow.Id).ToList();
+
+            return MapRowToTableRowDto(parentRow, columns, columns.Last(), GetColumnResponsibleForRowIsBottom(columns), GetColumnResponsibleForRowColor(columns));
+        }
+
+        private TableRowReturnDto MapRowToTableRowDto(Row row, List<Column> columns, Column lastColumn, Column? columnResponsibleForRowIsBottom, Column? columnResponsibleForRowColor)
+        {
+            return new TableRowReturnDto() {
+                    Id = row.Id,
+                    Color = GetRowColor(row, columnResponsibleForRowColor),
+                    Datacells = GetRowDatacells(row, lastColumn, columns).OrderBy(datacell => datacell.Id).ToList(),
+                    IsBottomRow = CheckIsBottomRow(row, columnResponsibleForRowIsBottom)
+                };
         }
 
         public AutoGeneratedJobDataDto AutoGenerateJobData(InputURLDto inputURLDto)
@@ -155,6 +167,16 @@ namespace tables_project_api.Services
                     throw new Exception("Server error");
                 }
             }
+        }
+
+        private Column? GetColumnResponsibleForRowIsBottom(List<Column> columns)
+        {
+            return columns.Find(column => column.ColumnIsBottomRowValue != null);
+        }
+
+        private Column? GetColumnResponsibleForRowColor(List<Column> columns)
+        {
+            return columns.Find(columns => columns.ColumnColorsValues != null);
         }
     }
 }

@@ -54,6 +54,7 @@
 .row {
   @include dataRow;
   background-color: white;
+  position: relative;
 }
 
 .row-neutral {
@@ -70,4 +71,25 @@
 .row-secondary {
   @include dataRow($secondary-200, $secondary-100, $secondary-700, $secondary-700);
   background-color: $secondary-50;
+}
+
+.overlay {
+  z-index: 1000;
+  position: absolute;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity $main-transition;
+}
+
+.overlay-background {
+  background-color: rgba(#f5f5f7, 0.85);
+  border-radius: $main-br;
+  inset: 1px;
+}
+
+.overlay-active {
+  display: flex;
+  opacity: 1;
 }
