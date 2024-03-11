@@ -13,6 +13,7 @@ namespace tables_project_api.Helper
             CreateMap<Column, ColumnReturnDto>();
             CreateMap<Row, TableRowReturnDto>();
             CreateMap<DropdownOption, DropdownOptionReturnDto>();
+            CreateMap<Datepicker, DatepickerDto>();
         }
     }
 }

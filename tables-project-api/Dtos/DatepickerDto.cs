@@ -2,5 +2,6 @@
 {
     public class DatepickerDto
     {
+        public int Id { get; set; }
     }
 }

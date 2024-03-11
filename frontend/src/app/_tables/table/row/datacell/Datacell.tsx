@@ -6,6 +6,7 @@ import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import { TableDatacellDto } from '@/models/interfaces/TableDatacellDto';
 import Textarea from '@/components/textarea/Textarea';
 import { Menu, MenuItem } from '@mui/material';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import styles from './datacell.module.scss';
 
 type DatacellProps = {
@@ -26,18 +27,19 @@ function Datacell(props: DatacellProps) {
   }, [datacell.value]);
 
   const isDropdown = datacell.dropdown !== null;
+  const isDatepicker = datacell.datepicker !== null;
 
-  const [dropdownAnchorEl, setDropdownAnchorEl] = useState<(EventTarget & Element) | null>(null);
-  const openDropdown = Boolean(dropdownAnchorEl);
+  const [anchorEl, setAnchorEl] = useState<(EventTarget & Element) | null>(null);
+  const openDropdown = Boolean(anchorEl);
 
   const [isEditing, setIsEditing] = useState(isDropdown ? false : isEditingByDefault);
 
-  const handleOpenDropdown = (event: KeyboardEvent | MouseEvent) => {
-    setDropdownAnchorEl(event.currentTarget);
+  const handleOpen = (event: KeyboardEvent | MouseEvent) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  const handleCloseDropdown = () => {
-    setDropdownAnchorEl(null);
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   const handleSave = (newValue: string) => {
@@ -61,12 +63,12 @@ function Datacell(props: DatacellProps) {
           >
             {datacellValue}
             {isDropdown && (
-              <Menu open={openDropdown} onClose={handleCloseDropdown} anchorEl={dropdownAnchorEl}>
+              <Menu open={openDropdown} onClose={handleClose} anchorEl={anchorEl}>
                 {datacell.dropdown?.options.map((option) => (
                   <MenuItem
                     key={option.id}
                     onClick={() => {
-                      handleCloseDropdown();
+                      handleClose();
                       onSave(datacell.id, option.value);
                     }}
                   >
@@ -81,15 +83,31 @@ function Datacell(props: DatacellProps) {
                 role="button"
                 tabIndex={0}
                 className={styles.iconContainer}
-                onClick={(event) => handleOpenDropdown(event)}
+                onClick={(event) => handleOpen(event)}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter') {
                     event.preventDefault();
-                    handleOpenDropdown(event);
+                    handleOpen(event);
                   }
                 }}
               >
                 <ExpandMoreRoundedIcon className={`${styles.icon} ${iconClassName}`} />
+              </div>
+            ) : isDatepicker ? (
+              <div
+                aria-label="Edit date"
+                role="button"
+                tabIndex={0}
+                className={styles.iconContainer}
+                onClick={(event) => handleOpen(event)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    event.preventDefault();
+                    handleOpen(event);
+                  }
+                }}
+              >
+                <CalendarMonthIcon className={`${styles.icon} ${iconClassName}`} />
               </div>
             ) : (
               <div

@@ -55,8 +55,6 @@ namespace tables_project_api.Services
             return outputRows;
         }
 
-
-
         private string GetRowColor(Row row, Column? responsibleColumn)
         {
             if (responsibleColumn == null)
@@ -96,7 +94,7 @@ namespace tables_project_api.Services
                     ColumnId = datacell.Column.Id,
                     IsLastColumn = datacell.Column.Id == lastColumn.Id,
                     Dropdown = coorespondingColumn.Dropdown != null ? new DropdownDto() { Options = _mapper.Map<ICollection<DropdownOptionReturnDto>>(coorespondingColumn.Dropdown.Options) } : null,
-                    Datepicker = coorespondingColumn.Datepicker != null ? new DatepickerDto() { } : null,
+                    Datepicker = coorespondingColumn.Datepicker != null ? _mapper.Map<DatepickerDto>(coorespondingColumn.Datepicker) : null,
                 });
             }
 
@@ -114,7 +112,11 @@ namespace tables_project_api.Services
 
             List<Column> columns = _tableRepository.GetColumnsByRowId(parentRow.Id).ToList();
 
-            return MapRowToTableRowDto(parentRow, columns, columns.Last(), GetColumnResponsibleForRowIsBottom(columns), GetColumnResponsibleForRowColor(columns));
+            return MapRowWithColumnsToTableRowDto(parentRow, columns);
+        }
+        private TableRowReturnDto MapRowWithColumnsToTableRowDto(Row row, List<Column> columns)
+        {
+            return MapRowToTableRowDto(row, columns, columns.Last(), GetColumnResponsibleForRowIsBottom(columns), GetColumnResponsibleForRowColor(columns));
         }
 
         private TableRowReturnDto MapRowToTableRowDto(Row row, List<Column> columns, Column lastColumn, Column? columnResponsibleForRowIsBottom, Column? columnResponsibleForRowColor)

@@ -42,7 +42,6 @@ namespace tables_project_api.Controllers
         public IActionResult UpdateDatacellValueById(int datacellId, [FromBody][Required] InputDatacellValueDto inputDatacellValueDto)
         {
             return Ok(_tableService.UpdateDatacellValueById(datacellId, inputDatacellValueDto.Value));
-            
         }
 
 
