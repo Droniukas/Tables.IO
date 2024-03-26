@@ -12,6 +12,7 @@ import { memo, useEffect, useState } from 'react';
 import { RowForAddingNewRow } from '@/models/interfaces/RowForAddingNewRow';
 import Textarea from '@/components/textarea/Textarea';
 import { CircularProgress } from '@mui/material';
+import { InputURLDto } from '@/models/interfaces/InputURLDto';
 import styles from './row.module.scss';
 import Datacell from './datacell/Datacell';
 
@@ -50,12 +51,23 @@ function Row(props: RowProps) {
     }
   }
 
-  const generateNewRowFromLink = (linkedInLink: string) => {
+  const generateNewRowFromLink = async (linkedInLink: string) => {
     setIsAddingNewRow(true);
-    setTimeout(() => {
-      setIsAddingNewRow(false);
-      removeRowById();
-    }, 2000);
+
+    const body: InputURLDto = { url: linkedInLink };
+    const jobData = await (
+      await fetch('https://localhost:7086/api/Table/autoGenerateJobData', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      })
+    ).json();
+    setIsAddingNewRow(false);
+    removeRowById();
+
+    console.log(jobData);
   };
 
   return (

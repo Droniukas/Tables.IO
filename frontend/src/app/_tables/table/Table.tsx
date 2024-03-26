@@ -7,6 +7,8 @@ import { TableRowDto } from '@/models/interfaces/TableRowDto';
 import { ColumnDto } from '@/models/interfaces/ColumnDto';
 import { TableDatacellDto } from '@/models/interfaces/TableDatacellDto';
 import { RowForAddingNewRow } from '@/models/interfaces/RowForAddingNewRow';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Columns from './columns/Columns';
 import Rows from './rows/Rows';
 import styles from './table.module.scss';
@@ -21,34 +23,37 @@ function Table(props: TableProps) {
   const [rows, setRows] = useState<(TableRowDto | RowForAddingNewRow)[]>(tableDto.rows);
   const [columns] = useState<ColumnDto[]>(tableDto.columns);
 
-  const updateDatacellValueById = useCallback(async (datacellId: number, value: string) => {
-    const body: InputDatacellValueDto = { value };
+  const updateDatacellValueById = useCallback(
+    async (datacellId: number, value: string) => {
+      const body: InputDatacellValueDto = { value };
 
-    const newRow = await (
-      await fetch(`https://localhost:7086/api/Table/updateDatacellValueById/${datacellId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      })
-    ).json();
+      const newRow = await (
+        await fetch(`https://localhost:7086/api/Table/updateDatacellValueById/${datacellId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        })
+      ).json();
 
-    const newRows = rows.map((row) => {
-      if (row.isRowForAddingNewRow) return row;
-      if ((row as TableRowDto).datacells.some((datacell: TableDatacellDto) => datacell.id === datacellId)) {
-        return newRow;
-      }
-      return row;
-    });
+      const newRows = rows.map((row) => {
+        if (row.isRowForAddingNewRow) return row;
+        if ((row as TableRowDto).datacells.some((datacell: TableDatacellDto) => datacell.id === datacellId)) {
+          return newRow;
+        }
+        return row;
+      });
 
-    setRows(newRows);
-  }, []);
+      setRows(newRows);
+    },
+    [rows]
+  );
 
   const onAddRowClick = useCallback(() => {
     if (rows.some((row) => row.isRowForAddingNewRow)) return;
     setRows((prevRows) => [...prevRows, { isRowForAddingNewRow: true }]);
-  }, []);
+  }, [rows]);
 
   const onRemoveRowById = useCallback((rowId?: number) => {
     if (!rowId) {
@@ -60,14 +65,14 @@ function Table(props: TableProps) {
   }, []);
 
   return (
-    <>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
       <TableButtons onAddRowClick={onAddRowClick} />
       <table className={styles.table}>
         <Columns columns={columns} />
         <Rows rows={rows} updateDatacellValueById={updateDatacellValueById} removeRowById={onRemoveRowById} />
       </table>
       <div className={styles.pagination}>Pagination</div>
-    </>
+    </LocalizationProvider>
   );
 }
 

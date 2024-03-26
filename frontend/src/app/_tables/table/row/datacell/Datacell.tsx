@@ -7,6 +7,8 @@ import { TableDatacellDto } from '@/models/interfaces/TableDatacellDto';
 import Textarea from '@/components/textarea/Textarea';
 import { Menu, MenuItem } from '@mui/material';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { DateCalendar, DatePicker } from '@mui/x-date-pickers';
+import dayjs, { Dayjs } from 'dayjs';
 import styles from './datacell.module.scss';
 
 type DatacellProps = {
@@ -61,7 +63,30 @@ function Datacell(props: DatacellProps) {
           <div
             className={`${styles.datacellData} ${textClassName} ${isDropdown ? styles.dropdownEdit : styles.textEdit}`}
           >
-            {datacellValue}
+            {isDatepicker ? (
+              <DatePicker
+                sx={{
+                  '& .MuiInputBase-root': {
+                    padding: 0,
+                    '& .MuiInputBase-input': {
+                      padding: 0,
+                      border: 'none',
+                    },
+                    '& .MuiOutlinedInput-notchedOutline': {
+                      border: 'none',
+                    },
+                  },
+                }}
+                value={dayjs(datacellValue)}
+                onChange={(newValue) => {
+                  if (newValue !== null) {
+                    onSave(datacell.id, newValue.format('YYYY-MM-DD'));
+                  }
+                }}
+              />
+            ) : (
+              datacellValue
+            )}
             {isDropdown && (
               <Menu open={openDropdown} onClose={handleClose} anchorEl={anchorEl}>
                 {datacell.dropdown?.options.map((option) => (
@@ -93,38 +118,25 @@ function Datacell(props: DatacellProps) {
               >
                 <ExpandMoreRoundedIcon className={`${styles.icon} ${iconClassName}`} />
               </div>
-            ) : isDatepicker ? (
-              <div
-                aria-label="Edit date"
-                role="button"
-                tabIndex={0}
-                className={styles.iconContainer}
-                onClick={(event) => handleOpen(event)}
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter') {
-                    event.preventDefault();
-                    handleOpen(event);
-                  }
-                }}
-              >
-                <CalendarMonthIcon className={`${styles.icon} ${iconClassName}`} />
-              </div>
             ) : (
-              <div
-                aria-label="Edit"
-                role="button"
-                tabIndex={0}
-                className={styles.iconContainer}
-                onClick={() => setIsEditing(true)}
-                onKeyDown={(event) => {
-                  if (event.key === 'Enter') {
-                    event.preventDefault();
-                    setIsEditing(true);
-                  }
-                }}
-              >
-                <EditRoundedIcon className={`${styles.icon} ${iconClassName}`} />
-              </div>
+              !isDatepicker &&
+              !isDropdown && (
+                <div
+                  aria-label="Edit"
+                  role="button"
+                  tabIndex={0}
+                  className={styles.iconContainer}
+                  onClick={() => setIsEditing(true)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter') {
+                      event.preventDefault();
+                      setIsEditing(true);
+                    }
+                  }}
+                >
+                  <EditRoundedIcon className={`${styles.icon} ${iconClassName}`} />
+                </div>
+              )
             )}
           </div>
         )}

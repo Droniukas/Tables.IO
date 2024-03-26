@@ -12,7 +12,7 @@ using tables_project_api.Data;
 namespace tables_project_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240210085329_Initial")]
+    [Migration("20240324142635_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
