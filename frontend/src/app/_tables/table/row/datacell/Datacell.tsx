@@ -6,9 +6,8 @@ import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import { TableDatacellDto } from '@/models/interfaces/TableDatacellDto';
 import Textarea from '@/components/textarea/Textarea';
 import { Menu, MenuItem } from '@mui/material';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import { DateCalendar, DatePicker } from '@mui/x-date-pickers';
-import dayjs, { Dayjs } from 'dayjs';
+import { DatePicker } from '@mui/x-date-pickers';
+import dayjs from 'dayjs';
 import styles from './datacell.module.scss';
 
 type DatacellProps = {
@@ -62,19 +61,32 @@ function Datacell(props: DatacellProps) {
         ) : (
           <div
             className={`${styles.datacellData} ${textClassName} ${isDropdown ? styles.dropdownEdit : styles.textEdit}`}
+            style={
+              isDatepicker
+                ? {
+                    paddingRight: '0px',
+                  }
+                : {}
+            }
           >
             {isDatepicker ? (
               <DatePicker
                 sx={{
                   '& .MuiInputBase-root': {
-                    padding: 0,
                     '& .MuiInputBase-input': {
                       padding: 0,
-                      border: 'none',
                     },
                     '& .MuiOutlinedInput-notchedOutline': {
                       border: 'none',
                     },
+                  },
+                  '& .MuiButtonBase-root': {
+                    padding: '0px',
+                  },
+                }}
+                slotProps={{
+                  openPickerIcon: {
+                    className: `${styles.icon} ${iconClassName} ${styles.dateIconContainer}`,
                   },
                 }}
                 value={dayjs(datacellValue)}

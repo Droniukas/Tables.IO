@@ -5,7 +5,8 @@
     .textEdit {
       border-color: $primary-200;
     }
-    .iconContainer {
+    .iconContainer,
+    .dateIconContainer {
       opacity: 1;
     }
   }
@@ -27,6 +28,10 @@
   }
 }
 
+.datepickerDatacell {
+  padding-right: 0px;
+}
+
 .iconContainer {
   position: absolute;
   right: 0;
@@ -36,9 +41,13 @@
   justify-content: center;
   align-items: center;
   background-color: inherit;
+  cursor: pointer;
+}
+
+.dateIconContainer,
+.iconContainer {
   opacity: 0;
   transition: opacity $main-transition;
-  cursor: pointer;
   &:focus {
     opacity: 1;
   }
