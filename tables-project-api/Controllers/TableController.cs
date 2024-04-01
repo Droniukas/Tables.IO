@@ -48,7 +48,6 @@ namespace tables_project_api.Controllers
 
             }
             ));
-
         }
 
         [HttpPatch("updateDatacellValueById/{datacellId}")]

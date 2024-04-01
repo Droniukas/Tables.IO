@@ -59,6 +59,7 @@ function Table(props: TableProps) {
     await fetch(`https://localhost:7086/api/Table/removeRowById/${rowId}`, {
       method: 'DELETE',
     });
+
     setRows((prevRows) => prevRows.filter((row) => row!.id !== rowId));
   }, []);
 
