@@ -3,5 +3,6 @@
     public class InputURLDto
     {
         public string Url { get; set; }
+        public int TableId { get; set; }
     }
 }

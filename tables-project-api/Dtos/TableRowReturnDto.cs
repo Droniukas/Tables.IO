@@ -6,5 +6,6 @@
         public string Color { get; set; }
         public ICollection<TableDatacellReturnDto> Datacells { get; set; }
         public bool IsBottomRow { get; set; }
+        public int TableId { get; set; }
     }
 }

@@ -6,5 +6,6 @@
         public int Id { get; set; }
         public Table Table { get; set; }
         public ICollection<Datacell> Datacells { get; set; }
+        public string? DateRemoved { get; set; }
     }
 }

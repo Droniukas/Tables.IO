@@ -1,8 +1,7 @@
 import { Color } from '../enums/Color';
-import { RowForAddingNewRow } from './RowForAddingNewRow';
 import { TableDatacellDto } from './TableDatacellDto';
 
-export interface TableRowDto extends RowForAddingNewRow {
+export interface TableRowDto {
   id: number;
   color: Color;
   datacells: TableDatacellDto[];

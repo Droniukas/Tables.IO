@@ -6,5 +6,6 @@
         public string Value { get; set; }
         public Row Row { get; set; }
         public Column Column { get; set; }
+        public string? DateRemoved { get; set; }
     }
 }

@@ -9,5 +9,6 @@
         public ColumnColorsValues? ColumnColorsValues { get; set; }
         public ColumnIsBottomRowValue? ColumnIsBottomRowValue { get; set; }
         public Table Table { get; set; }
+        public int TableId { get; set; }
     }
 }
