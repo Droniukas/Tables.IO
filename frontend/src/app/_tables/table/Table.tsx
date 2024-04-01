@@ -8,7 +8,7 @@ import { ColumnDto } from '@/models/interfaces/ColumnDto';
 import { TableDatacellDto } from '@/models/interfaces/TableDatacellDto';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import Columns from './columns/Columns';
+import ArrowDropDownRoundedIcon from '@mui/icons-material/ArrowDropDownRounded';
 import styles from './table.module.scss';
 import TableButtons from './TableButtons';
 import RowForAddingNewRow from './row/RowForAddingNewRow';
@@ -83,7 +83,17 @@ function Table(props: TableProps) {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <TableButtons onAddRowClick={onAddRowClick} />
       <table className={styles.table}>
-        <Columns columns={columns} />
+        <thead>
+          <tr>
+            {columns.map((column) => (
+              <td key={column.id}>
+                <div>
+                  {column.name} <ArrowDropDownRoundedIcon />
+                </div>
+              </td>
+            ))}
+          </tr>
+        </thead>
         <tbody>
           {hasRowForAddingNewRow && (
             <RowForAddingNewRow onSubmit={onAddNewRow} onCancel={onCancelAddNewRow} tableId={tableDto.id} />
