@@ -9,9 +9,11 @@ import { TableDatacellDto } from '@/models/interfaces/TableDatacellDto';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Columns from './columns/Columns';
-import Rows from './rows/Rows';
 import styles from './table.module.scss';
 import TableButtons from './TableButtons';
+import RowForAddingNewRow from './row/RowForAddingNewRow';
+import Row from './row/Row';
+import TablesSeperator from '../tablesSeperator/TablesSeperator';
 
 type TableProps = {
   tableDto: TableDto;
@@ -53,8 +55,10 @@ function Table(props: TableProps) {
     setHasRowForAddingNewRow(true);
   }, []);
 
-  const onRemoveRowById = useCallback((rowId: number) => {
-    // should be some database action for deleting row as well as the code bellow
+  const onRemoveRowById = useCallback(async (rowId: number) => {
+    await fetch(`https://localhost:7086/api/Table/removeRowById/${rowId}`, {
+      method: 'DELETE',
+    });
     setRows((prevRows) => prevRows.filter((row) => row!.id !== rowId));
   }, []);
 
@@ -67,20 +71,26 @@ function Table(props: TableProps) {
     setHasRowForAddingNewRow(false);
   };
 
+  const topRows = rows.filter((row) => !row.isBottomRow) as TableRowDto[];
+  const bottomRows = rows.filter((row) => row.isBottomRow) as TableRowDto[];
+
+  const mapRow = (row: TableRowDto) => (
+    <Row key={row.id} row={row} updateDatacellValueById={updateDatacellValueById} removeRowById={onRemoveRowById} />
+  );
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <TableButtons onAddRowClick={onAddRowClick} />
       <table className={styles.table}>
         <Columns columns={columns} />
-        <Rows
-          hasRowForAddingNewRow={hasRowForAddingNewRow}
-          rows={rows}
-          updateDatacellValueById={updateDatacellValueById}
-          removeRowById={onRemoveRowById}
-          onAddNewRow={onAddNewRow}
-          onCancelAddNewRow={onCancelAddNewRow}
-          tableId={tableDto.id}
-        />
+        <tbody>
+          {hasRowForAddingNewRow && (
+            <RowForAddingNewRow onSubmit={onAddNewRow} onCancel={onCancelAddNewRow} tableId={tableDto.id} />
+          )}
+          {topRows.map(mapRow)}
+          <TablesSeperator />
+          {bottomRows.map(mapRow)}
+        </tbody>
       </table>
       <div className={styles.pagination}>Pagination</div>
     </LocalizationProvider>
