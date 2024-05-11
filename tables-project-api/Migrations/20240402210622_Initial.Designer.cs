@@ -12,8 +12,8 @@ using tables_project_api.Data;
 namespace tables_project_api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240401133519_Add_column_DateRemoved")]
-    partial class Add_column_DateRemoved
+    [Migration("20240402210622_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

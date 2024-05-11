@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>tables_project_api</RootNamespace>
+    <UserSecretsId>937fe14e-fcef-463d-a38c-d4190a09d9ef</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

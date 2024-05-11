@@ -47,7 +47,8 @@ namespace tables_project_api.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TableId = table.Column<int>(type: "int", nullable: false)
+                    TableId = table.Column<int>(type: "int", nullable: false),
+                    DateRemoved = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -145,7 +146,8 @@ namespace tables_project_api.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RowId = table.Column<int>(type: "int", nullable: false),
-                    ColumnId = table.Column<int>(type: "int", nullable: false)
+                    ColumnId = table.Column<int>(type: "int", nullable: false),
+                    DateRemoved = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

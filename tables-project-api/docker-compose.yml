@@ -1,0 +1,22 @@
+services:
+  web_api:
+    build: .
+    image: tablesio/web_api
+    container_name: dotnet_web_api
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_HTTPS_PORTS=5000
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=root
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/root/.aspnet/https/tables-project-api.pfx
+    volumes:
+      - $APPDATA\microsoft\UserSecrets\:/root/.microsoft/usersecrets
+      - $USERPROFILE\.aspnet\https:/root/.aspnet/https/
+  sql:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: sql_server
+    ports: # not actually needed, because the two services are on the same network
+      - "1433:1433" 
+    environment:
+      - ACCEPT_EULA=y
+      - SA_PASSWORD=A&VeryComplex123Password

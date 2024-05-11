@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using System.Text.Json.Serialization;
 using tables_project_api.Data;
 using tables_project_api.Interfaces;
 using tables_project_api.Repository;
 using tables_project_api.Services;
+using static Microsoft.AspNetCore.Http.StatusCodes;
 
 namespace tables_project_api
 {
@@ -14,6 +16,7 @@ namespace tables_project_api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // fix for prod
             var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
             builder.Services.AddCors(options =>
             {
@@ -27,39 +30,56 @@ namespace tables_project_api
             });
 
             // Add services to the container.
-
             builder.Services.AddControllers().AddJsonOptions(options =>
             {
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
-            builder.Services.AddTransient<Seed>();
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             builder.Services.AddScoped<ITableRepository, TableRepository>();
             builder.Services.AddScoped<ITableService, TableService>();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-                //options.EnableSensitiveDataLogging(true); // remove this from prod
+                //options.EnableSensitiveDataLogging(true);
             });
+
+            builder.Services.AddHttpsRedirection(options =>
+            {
+                options.HttpsPort = 5000;
+            });
+
+            if (!builder.Environment.IsDevelopment())
+            {
+                builder.Services.AddHttpsRedirection(options =>
+                {
+                    options.RedirectStatusCode = Status308PermanentRedirect;
+                    options.HttpsPort = 5000;
+                });
+            }
 
             var app = builder.Build();
 
+            // fix for prod
             app.UseCors(MyAllowSpecificOrigins);
 
             if (args.Length == 1 && args[0].ToLower() == "seeddata")
                 SeedData(app);
 
+            if (app.Environment.IsDevelopment())
+            {
+                SeedData(app);
+            }
+
             void SeedData(IHost app)
             {
-                var scopedFactory = app.Services.GetService<IServiceScopeFactory>();
-
-                using (var scope = scopedFactory.CreateScope())
+                using (var scope = app.Services.CreateScope())
                 {
-                    var service = scope.ServiceProvider.GetService<Seed>();
-                    service.SeedDataContext();
+                    var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
+                    dataContext.Database.EnsureCreated();
+                    dataContext.SeedDataContext();
                 }
             }
 
@@ -73,7 +93,6 @@ namespace tables_project_api
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

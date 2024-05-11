@@ -3,14 +3,9 @@ using tables_project_api.Models;
 
 namespace tables_project_api
 {
-    public class Seed
+    public static class Seed
     {
-        private readonly DataContext dataContext;
-        public Seed(DataContext context)
-        {
-            this.dataContext = context;
-        }
-        public void SeedDataContext()
+        public static void SeedDataContext(this DataContext dataContext)
         {
             if (!dataContext.Tables.Any())
             {
