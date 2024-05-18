@@ -46,20 +46,6 @@ namespace tables_project_api
                 //options.EnableSensitiveDataLogging(true);
             });
 
-            builder.Services.AddHttpsRedirection(options =>
-            {
-                options.HttpsPort = 5000;
-            });
-
-            if (!builder.Environment.IsDevelopment())
-            {
-                builder.Services.AddHttpsRedirection(options =>
-                {
-                    options.RedirectStatusCode = Status308PermanentRedirect;
-                    options.HttpsPort = 5000;
-                });
-            }
-
             var app = builder.Build();
 
             // fix for prod
@@ -68,10 +54,10 @@ namespace tables_project_api
             if (args.Length == 1 && args[0].ToLower() == "seeddata")
                 SeedData(app);
 
-            if (app.Environment.IsDevelopment())
-            {
-                SeedData(app);
-            }
+            //if (app.Environment.IsDevelopment())
+            //{
+            SeedData(app);
+            //}
 
             void SeedData(IHost app)
             {
@@ -89,8 +75,6 @@ namespace tables_project_api
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
