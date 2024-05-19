@@ -16,19 +16,19 @@ namespace tables_project_api.Controllers
             this._tableService = tableService;
         }
 
-        [HttpGet("{userId}")]
-        [ProducesResponseType(200, Type = typeof(TableReturnDto))]
-        public IActionResult GetTableByUserId(int userId)
-        {
-            //try
-            //{
-            return Ok(_tableService.GetTableByUserId(userId));
-            //}
-            //catch
-            //{
-            //    return StatusCode(StatusCodes.Status500InternalServerError);
-            //};
-        }
+        //[HttpGet("{userId}")]
+        //[ProducesResponseType(200, Type = typeof(TableReturnDto))]
+        //public IActionResult GetTableByUserId(int userId)
+        //{
+        //    //try
+        //    //{
+        //    return Ok(_tableService.GetTableByUserId(userId));
+        //    //}
+        //    //catch
+        //    //{
+        //    //    return StatusCode(StatusCodes.Status500InternalServerError);
+        //    //};
+        //}
 
         [HttpPost("autoGenerateJobData")]
         [ProducesResponseType(201, Type = typeof(TableRowReturnDto))]
