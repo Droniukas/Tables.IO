@@ -54,10 +54,10 @@ namespace tables_project_api
             if (args.Length == 1 && args[0].ToLower() == "seeddata")
                 SeedData(app);
 
-            //if (app.Environment.IsDevelopment())
-            //{
-            SeedData(app);
-            //}
+            if (app.Environment.IsDevelopment())
+            {
+                SeedData(app);
+            }
 
             void SeedData(IHost app)
             {
