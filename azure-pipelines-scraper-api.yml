@@ -41,3 +41,9 @@ stages:
         tags: |
           latest
           $(tag)
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: 'Azure subscription 1(95e43a02-bec7-4717-a0d5-7f0cedaf9636)'
+        scriptType: 'ps'
+        scriptLocation: 'inlineScript'
+        inlineScript: 'az container restart -g="tables-io-scraper-api" -n="scraperapi"'
