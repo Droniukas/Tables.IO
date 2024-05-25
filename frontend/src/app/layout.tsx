@@ -31,7 +31,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={inter.className}>
         <Header />
-
         <main className={styles.main}>
           <Sidebar />
           {children}
