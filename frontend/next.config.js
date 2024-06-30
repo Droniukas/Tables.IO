@@ -6,6 +6,7 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'styles')],
     additionalData: '@import "src/styles/variables.scss"; @import "src/styles/mixins.scss";',
   },
+  output: 'standalone',
 };
 
 module.exports = nextConfig;

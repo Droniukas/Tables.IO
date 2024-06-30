@@ -4,7 +4,7 @@ import styles from './_tables/table/table.module.scss';
 
 async function getTableData(userId: number): Promise<TableDto> {
   // figure out what to do with cache
-  const res = await fetch(`https://localhost:7086/api/Table/${userId}`, { cache: 'no-store' });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Table/${userId}`, { cache: 'no-store' });
   return res.json();
 }
 

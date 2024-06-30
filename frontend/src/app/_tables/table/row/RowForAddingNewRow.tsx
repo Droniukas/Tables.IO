@@ -28,7 +28,7 @@ function RowForAddingNewRow(props: RowForAddingNewRowProps) {
 
     const body: InputURLDto = { url: linkedInLink, tableId };
     const newRow: TableRowDto = await (
-      await fetch('https://localhost:7086/api/Table/autoGenerateJobData', {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Table/autoGenerateJobData`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

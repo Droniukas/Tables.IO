@@ -16,17 +16,20 @@ namespace tables_project_api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // fix for prod
-            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-            builder.Services.AddCors(options =>
+            var services = builder.Services;
+            var configuration = builder.Configuration;
+
+            var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+            services.AddCors(options =>
             {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                                    policy =>
-                                    {
-                                        policy.AllowAnyOrigin()
-                                   .AllowAnyMethod()
-                                   .AllowAnyHeader();
-                                    });
+                options.AddPolicy(myAllowSpecificOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins(configuration.GetSection("AllowedOrigins").Value.Split(","))
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .AllowCredentials();
+                    });
             });
 
             // Add services to the container.
@@ -48,8 +51,7 @@ namespace tables_project_api
 
             var app = builder.Build();
 
-            // fix for prod
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors(myAllowSpecificOrigins);
 
             if (args.Length == 1 && args[0].ToLower() == "seeddata")
                 SeedData(app);

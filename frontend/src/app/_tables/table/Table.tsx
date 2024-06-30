@@ -30,7 +30,7 @@ function Table(props: TableProps) {
       const body: InputDatacellValueDto = { value };
 
       const newRow = await (
-        await fetch(`https://localhost:7086/api/Table/updateDatacellValueById/${datacellId}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Table/updateDatacellValueById/${datacellId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ function Table(props: TableProps) {
   }, []);
 
   const onRemoveRowById = useCallback(async (rowId: number) => {
-    await fetch(`https://localhost:7086/api/Table/removeRowById/${rowId}`, {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/Table/removeRowById/${rowId}`, {
       method: 'DELETE',
     });
 
