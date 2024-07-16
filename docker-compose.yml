@@ -3,19 +3,9 @@ services:
   reverse-proxy:
     build: 
       context: ./Nginx
-    # depends_on:
-    #     - web-api
-    #     - temperature-service
-    #     - precip-service
     ports:
       - "80:80"
-  # frontend:
-  #   image: frontend
-  #   container_name: frontend_application
-  #   build: 
-  #     context: ./frontend
-  #   ports:
-  #     - "3000:80"
+      - "443:443"
   tables-project-api:
     image: tables-project-api
     container_name: tables-project-api-application
@@ -25,21 +15,3 @@ services:
       - reverse-proxy
     expose:
       - "433"
-  # scraper-api:
-  #   image: scraper-api
-  #   container_name: scraper-api-application
-  #   build: 
-  #     context: ./scraper-api
-  #   ports:
-  #     - "3001:3001"
-
-  
-
-  # sql:
-  #   image: "mcr.microsoft.com/mssql/server:2022-latest"
-  #   container_name: sql_server_tablesio
-  #   ports: # not actually needed, because the two services are on the same network
-  #     - "1433:1433" 
-  #   environment:
-  #     - ACCEPT_EULA=y
-  #     - SA_PASSWORD=A&VeryComplex123Password
