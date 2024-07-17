@@ -5,8 +5,6 @@ services:
     container_name: tables-project-api
     build: 
       context: ./tables-project-api
-    depends_on:
-      - reverse-proxy
     expose:
       - "433"  
   
