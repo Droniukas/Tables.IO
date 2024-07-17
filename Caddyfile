@@ -1,0 +1,5 @@
+tables-project-api.tables-io.com {
+    reverse_proxy tables-project-api:433 {
+        header_down Strict-Transport-Security max-age=31536000;
+    }
+}

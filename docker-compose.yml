@@ -1,17 +1,28 @@
 version: "3.9"
 services:
-  reverse-proxy:
-    build: 
-      context: ./Nginx
-    ports:
-      - "80:80"
-      - "443:443"
   tables-project-api:
     image: tables-project-api
-    container_name: tables-project-api-application
+    container_name: tables-project-api
     build: 
       context: ./tables-project-api
     depends_on:
       - reverse-proxy
     expose:
-      - "433"
+      - "433"  
+  
+  caddy:
+    image: caddy/caddy:2.2.1-alpine
+    container_name: caddy-services
+    restart: unless-stopped
+    port:
+      - "80:80"
+      - "433:433"
+    volumes:
+      - $PWD/Caddyfile:/etc/caddy/CaddyFile
+      - $PWD/site:/srv
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:
