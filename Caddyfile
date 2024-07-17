@@ -1,4 +1,4 @@
-tables-project-api.tables-io.com {
+tables-project-api.tablesio.com {
     reverse_proxy tables-project-api:433 {
         header_down Strict-Transport-Security max-age=31536000;
     }
