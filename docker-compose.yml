@@ -13,7 +13,15 @@ services:
   #   container_name: tables-project-api
   #   build: 
   #     context: ./tables-project-api
-  
+  ghost:
+    image: ghost:4-alpine
+    restart: unless-stopped
+    environment:
+            - url=https://tables-project-api.tablesio.com 
+    volumes:
+            - /data/myghostapp:/var/lib/ghost/content
+    networks:
+            - internal
   caddy:
     image: caddy/caddy:2.2.1-alpine
     container_name: caddy-services
