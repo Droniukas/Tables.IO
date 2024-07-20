@@ -1,5 +1,9 @@
+{
+    email doremis.lt@gmail.com 
+    # Optional staging lets encrypt for testing. Comment out for production.
+    acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+}
+
 tables-project-api.tablesio.com {
-    reverse_proxy tables-project-api:80 {
-        header_down Strict-Transport-Security max-age=31536000;
-    }
+    reverse_proxy tables-project-api:80
 }

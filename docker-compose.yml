@@ -1,10 +1,18 @@
 version: "3.9"
+
+networks:
+  web:
+    external: true
+  internal:
+    external: false
+    driver: bridge
+
 services:
-  tables-project-api:
-    image: tables-project-api
-    container_name: tables-project-api
-    build: 
-      context: ./tables-project-api
+  # tables-project-api:
+  #   image: tables-project-api
+  #   container_name: tables-project-api
+  #   build: 
+  #     context: ./tables-project-api
   
   caddy:
     image: caddy/caddy:2.2.1-alpine
@@ -16,8 +24,11 @@ services:
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - $PWD/site:/srv
-      - caddy_data:/data
-      - caddy_config:/config
+      - /data/caddy_data:/data
+      - /data/caddy_config:/config
+    networks:
+      - web
+      - internal
 
 volumes:
   caddy_data:
