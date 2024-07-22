@@ -19,5 +19,5 @@ RUN dotnet publish "./tables-project-api.csproj" -c $BUILD_CONFIGURATION -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENV ASPNETCORE_URLS https://tables-project-api.tablesio.com
+ENV ASPNETCORE_URLS http://*:80
 ENTRYPOINT ["dotnet", "tables-project-api.dll"]
