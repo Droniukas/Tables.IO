@@ -8,20 +8,22 @@ networks:
     driver: bridge
 
 services:
-  # tables-project-api:
-  #   image: tables-project-api
-  #   container_name: tables-project-api
-  #   build: 
-  #     context: ./tables-project-api
-  ghost:
-    image: ghost:4-alpine
-    restart: unless-stopped
-    environment:
-            - url=https://tables-project-api.tablesio.com 
-    volumes:
-            - /data/myghostapp:/var/lib/ghost/content
+  tables-project-api:
+    image: tables-project-api
+    container_name: tables-project-api
+    build: 
+      context: ./tables-project-api
     networks:
-            - internal
+      - internal
+  # ghost:
+  #   image: ghost:4-alpine
+  #   restart: unless-stopped
+  #   environment:
+  #           - url=https://tables-project-api.tablesio.com 
+  #   volumes:
+  #           - /data/myghostapp:/var/lib/ghost/content
+  #   networks:
+  #           - internal
   caddy:
     image: caddy/caddy:2.2.1-alpine
     container_name: caddy-services

@@ -5,5 +5,5 @@
 }
 
 tables-project-api.tablesio.com {
-    reverse_proxy ghost:2368
+    reverse_proxy tables-project-api:80
 }
