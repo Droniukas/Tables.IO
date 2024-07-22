@@ -50,6 +50,11 @@ namespace tables_project_api
                 //options.EnableSensitiveDataLogging(true);
             });
 
+            builder.WebHost.ConfigureKestrel(options =>
+            {
+                options.ListenAnyIP(80); // You can specify the port you want to use for HTTP
+            });
+
             var app = builder.Build();
 
             app.UseCors(myAllowSpecificOrigins);
