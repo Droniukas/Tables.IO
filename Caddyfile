@@ -1,9 +1,11 @@
 {
-    email doremis.lt@gmail.com 
-    # Optional staging lets encrypt for testing. Comment out for production.
-    acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+	email doremis.lt@gmail.com
+	# Optional staging lets encrypt for testing. Comment out for production.
+	acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
 }
 
 tables-project-api.tablesio.com {
-    reverse_proxy tables-project-api:80
+	reverse_proxy tables-project-api:80
+	@blocked not remote_ip 78.58.241.192
+	respond @blocked "Your ip is blocked" 403
 }
