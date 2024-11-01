@@ -46,7 +46,6 @@ namespace tables_project_api.Controllers
                     jobData.DateApplied.ToString(),
                     "No response"
                 }
-
             }
             ));
         }

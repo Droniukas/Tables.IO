@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "prettier --write . && next lint --fix",
-    "prepare": "cd .. && husky install frontend/.husky"
+    "lint": "prettier --write . && next lint --fix"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
