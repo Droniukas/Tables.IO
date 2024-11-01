@@ -4,6 +4,10 @@
 	acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
 }
 
-tables-project-api.tablesio.com {
+http:// {
 	reverse_proxy tables-project-api:80
 }
+
+# http://localhost:8050 {
+# 	reverse_proxy frontend:3000
+# }

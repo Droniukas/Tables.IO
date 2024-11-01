@@ -1,20 +1,8 @@
-version: "3.9"
-
-networks:
-  web:
-    external: true
-  internal:
-    external: false
-    driver: bridge
-
 services:
   tables-project-api:
     image: tables-project-api
-    container_name: tables-project-api
-    build: 
+    build:
       context: ./tables-project-api
-    networks:
-      - internal
   caddy:
     image: caddy/caddy:2.2.1-alpine
     container_name: caddy-services
@@ -24,27 +12,14 @@ services:
       - "443:443"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
-      - $PWD/site:/srv
       - /data/caddy_data:/data
       - /data/caddy_config:/config
-    networks:
-      - web
-      - internal
-  frontend:
-    depends_on:
-      - tables-project-api
-      - caddy
-    image: tables-project-api-frontend
-    build:
-      context: ./frontend
-      target: production
-    volumes:
-      - .:/app
-      - /app/node_modules
-      - /app/.next
-    networks:
-      - internal
-
-volumes:
-  caddy_data:
-  caddy_config:
+  # frontend:
+  #   depends_on:
+  #     - tables-project-api
+  #     # - caddy
+  #   image: tables-project-api-frontend
+  #   build:
+  #     context: ./frontend
+  #   ports:
+  #     - "80:3000"
